@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import { Button, Form, FormGroup, Label, Input as ReactstrapInput, FormFeedback } from 'reactstrap';
 import { withFormik, ErrorMessage, Field } from 'formik';
 import * as yup from 'yup';
@@ -11,7 +11,16 @@ const ErrorFormFeedback = ({ name }) => (
 const ErrorInnerMessage = ({ name }) => (
     <ErrorMessage name={name} component={({ children }) => (
         <span className="text-danger" style={{ fontSize: '1.2rem' }}>{children}</span>)}/>);
-const Login = ({handleSubmit, handleReset, isSubmitting, dirty, errors, touched, history}) => (
+const Login = props => {
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+  } = props;
+  return (
     <div className="mx-auto">
         <h3>Sign In</h3>
         <Form className="text-left" onSubmit={handleSubmit}>
@@ -30,21 +39,29 @@ const Login = ({handleSubmit, handleReset, isSubmitting, dirty, errors, touched,
                 <Label for="myCheck" check>Remember me</Label>
                 <span className="ml-3"><ErrorInnerMessage name="isAccepted" /></span>
             </FormGroup>
-            <Button type="submit" className="btn-block" color="primary" disabled={isSubmitting}>Submit</Button>
+            <Button type="submit" className="btn-block" color="primary">Submit</Button>
         </Form>
         <p className="text-right"><Link to="/forgot-password">Forgot password</Link></p>
     </div>
-);
-
+  );
+};
 const MyEnhancedForm = withFormik({
     mapPropsToValues: () => ({myUsername: '', myPassword: '', isAccepted: false}),
-    handleSubmit: (values, { setSubmitting }) => {
-        setTimeout(() => {alert(JSON.stringify(values, null, 2));setSubmitting(false);}, 3000);
-        console.log('SUBMIT:', values);
+
+    validate: values => {
+        const errors = {};
+        if (!values.myUsername) {
+            errors.myUsername = 'Required';            
+        }        
+        return errors;
     },
-    validationSchema: yup.object().shape({
-        myUsername: yup.string().min(3, 'A Username must contain more than 3 characters').required('Enter a username'),
-        myPassword: yup.string().min(8, 'A Password must contain more than 8 characters').required('Enter a password'),
-    }),
+
+    handleSubmit: (values, { setSubmitting }) => {
+        setTimeout(() => {
+          alert(JSON.stringify(values, null, 2));
+          setSubmitting(false);
+        }, 1000);
+    },
+    
 })(Login);
 export default MyEnhancedForm;
