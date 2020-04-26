@@ -46,21 +46,29 @@ const Login = props => {
   );
 };
 const MyEnhancedForm = withFormik({
-    mapPropsToValues: () => ({myUsername: '', myPassword: '', isAccepted: false}),
+    mapPropsToValues: props => ({myUsername: '', myPassword: '', isAccepted: false}),
 
     validate: values => {
         const errors = {};
         if (!values.myUsername) {
-            errors.myUsername = 'Required';            
-        }        
-        return errors;
+            return errors.myUsername = 'Required';            
+        }
     },
 
-    handleSubmit: (values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 1000);
+    handleSubmit: (values, { props, resetForm, setSubmitting }) => {
+
+        setSubmitting(false);
+        resetForm();
+        props.history.push({
+            pathname: '/mypage',
+            search: '?query=abc',
+            state: { myUsername: values.myUsername }
+        })
+
+        // setTimeout(() => {
+        //   alert(JSON.stringify(values, null, 2));
+        //   setSubmitting(false);
+        // }, 1000);
     },
     
 })(Login);

@@ -3,7 +3,9 @@ import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
 
 import Login from "./components/login.component";
 import SignUp from "./components/signup.component";
+import ConfirmSignUp from "./components/confirm.component";
 import ForgotPassword from "./components/forgotPassword.component";
+import Mypage from "./components/mypage.component";
 
 const LoginController = () => {
 	return (
@@ -29,8 +31,9 @@ const LoginController = () => {
         <div className="auth-inner">
           <Switch>
             <Route exact path='/' component={Login} />
+            <Route exact path="/mypage" component={Mypage} />
             <Route path="/sign-up" component={SignUp} />
-            <Route path="/forgot-password" component={ForgotPassword} />            
+            <Route path="/forgot-password" component={ForgotPassword} />
           </Switch>
         </div>
       </div>
