@@ -67,3 +67,13 @@ body, html, .App, #root, .auth-wrapper {
   color: #7f7d7d;
   margin: 0;
 }
+
+.errorMsg {
+  text-align: left;
+  font-size: 13px;
+  color: red;
+}
+
+.checkbox {
+  mergin-right: 10px;
+}

@@ -3,9 +3,10 @@ import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
 
 import Login from "./components/login.component";
 import SignUp from "./components/signup.component";
-import ConfirmSignUp from "./components/confirm.component";
 import ForgotPassword from "./components/forgotPassword.component";
 import Mypage from "./components/mypage.component";
+import SignUpConfirm from "./components/signupConfirm.component";
+import SignUpComplete from "./components/signupComplete.component";
 
 const LoginController = () => {
 	return (
@@ -20,7 +21,7 @@ const LoginController = () => {
                 <Link className="nav-link" to={"/"}>Login</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to={"/sign-up"}>Sign up</Link>
+                <Link className="nav-link" to={"/signup"}>Sign up</Link>
               </li>
             </ul>
           </div>
@@ -32,7 +33,9 @@ const LoginController = () => {
           <Switch>
             <Route exact path='/' component={Login} />
             <Route exact path="/mypage" component={Mypage} />
-            <Route path="/sign-up" component={SignUp} />
+            <Route path="/signup" component={SignUp} />
+            <Route path="/signup-confirm" component={SignUpConfirm} />
+            <Route path="/signup-complete" component={SignUpComplete} />
             <Route path="/forgot-password" component={ForgotPassword} />
           </Switch>
         </div>

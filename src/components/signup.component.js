@@ -1,52 +1,64 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Button, Form, FormGroup, Label, Input as ReactstrapInput, FormFeedback } from 'reactstrap';
+import { Button, Form, FormGroup, Label } from 'reactstrap';
 import { withFormik, ErrorMessage, Field } from 'formik';
-import * as yup from 'yup';
+import * as Yup from 'yup';
 
-const Input = ({ name, ...others }) => (
-    <Field name={name} render={({ field }) => <ReactstrapInput {...field} {...others} />}/>);
-const ErrorFormFeedback = ({ name }) => (
-    <ErrorMessage name={name} component={({ children }) => <FormFeedback>{children}</FormFeedback>}/>);
-const SignUp = ({handleSubmit, handleReset, isSubmitting, dirty, errors, touched, history}) => (
+const SignUp = props => {
+  const {
+    handleSubmit,
+  } = props;
+  return (
     <div className="mx-auto">
         <h3>Sign Up</h3>
         <Form className="text-left" onSubmit={handleSubmit}>
             <FormGroup className="form-group">
                 <Label for="First name">Firstname</Label>
-                <input type="text" className="form-control" id="Firstname" name="Firstname" placeholder="First name" />
-                <ErrorFormFeedback name="Firstname" />
+                <Field type="text" name="firstname" className="form-control" autoComplete="firstname" placeholder="Enter firstname" />
+                <ErrorMessage name="firstname" />
             </FormGroup>
             <FormGroup className="form-group">
                 <Label for="Last name">Lastname</Label>
-                <input type="text" className="form-control" id="Lastname" name="Lastname" placeholder="Last name" />
-                <ErrorFormFeedback name="Lastname" />
+                <Field type="text" name="lastname" className="form-control" autoComplete="lastname" placeholder="Enter lastname" />
+                <ErrorMessage name="lastname" />
             </FormGroup>
             <FormGroup className="form-group">
-                <Label for="myUsername">Username</Label>
-                <Input type="email" className="form-control" id="emailAddress" name="emailAddress" placeholder="Enter email" valid={dirty && !errors.emailAddress} invalid={touched.emailAddress && !!errors.emailAddress}/>
-                <ErrorFormFeedback name="email" />
+                <Label for="emailAddress">EmailAddress</Label>
+                <Field type="email" name="emailAddress" className="form-control" autoComplete="emailAddress" placeholder="Enter emailAddress" />
+                <ErrorMessage name="emailAddress" />
             </FormGroup>
             <FormGroup className="form-group">
                 <Label for="password">Password</Label>
-                <input autoComplete="off" type="password" className="form-control" name="password" id="password" placeholder="Enter password"/>
-                <ErrorFormFeedback name="password" />
+                <Field type="text" name="password" className="form-control" autoComplete="password" placeholder="Enter password" />
+                <ErrorMessage name="password" />
             </FormGroup>
-            <Button type="submit" className="btn-block" color="primary" disabled={isSubmitting}>Confirm</Button>
+            <Button type="submit" className="btn-block" color="primary" >Confirm</Button>
         </Form>
         <p className="text-right">Already registered <Link to="/">sign in?</Link></p>
     </div>
-);
-
+    );
+};
 const MyEnhancedForm = withFormik({
-    mapPropsToValues: () => ({Firstname: '', Lastname: '', emailAddress: '', password: ''}),
-    handleSubmit: (values, { setSubmitting }) => {
-        setTimeout(() => {alert(JSON.stringify(values, null, 2));setSubmitting(false);}, 3000);
-        console.log('SUBMIT:', values);
-    },
-    validationSchema: yup.object().shape({
-        emailAddress: yup.string().min(3, 'A email must contain more than 3 characters').required('Enter a username'),
-        password: yup.string().min(8, 'A password must contain more than 8 characters').required('Enter a password'),
+    mapPropsToValues: props => ({firstname: '', lastname: '', emailAddress: '', password: ''}),
+    validationSchema: Yup.object().shape({
+        firstname: Yup.string().min(1, 'firstname is too short')
+                                .max(10, 'firstname is too long')
+                                .required('firstname is required'),
+        lastname: Yup.string().min(1, 'lastname is too short')
+                                .max(10, 'lastname is too long')
+                                .required('lastname is required'),
+        emailAddress: Yup.string().min(10, 'emailAddress is too short')
+                                .max(30, 'emailAddress is too long')
+                                .required('emailAddress is required'),                                
+        password: Yup.string().min(8, 'password is too short')
+                                .max(10, 'password is too long')
+                                .required('password is required')
     }),
+    handleSubmit: (values, { props }) => {
+        props.history.push({
+            pathname: '/signup-confirm',
+            state: { firstname: values.firstname, lastname: values.lastname, emailAddress: values.emailAddress, password: values.password}
+        })
+    },
 })(SignUp);
 export default MyEnhancedForm;
