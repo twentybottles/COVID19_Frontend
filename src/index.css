@@ -71,6 +71,7 @@ body, html, .App, #root, .auth-wrapper {
 .errorMsg {
   text-align: left;
   font-size: 13px;
+  margin-left: 10px;
   color: red;
 }
 

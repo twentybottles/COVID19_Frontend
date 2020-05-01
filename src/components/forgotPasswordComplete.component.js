@@ -2,13 +2,13 @@ import React from 'react'
 import { Button, Form } from 'reactstrap';
 import { withFormik } from 'formik';
 
-const SignUpComplete = props => {
+const ForgotPasswordComplete = props => {
   const {
     handleSubmit,
   } = props;
   return (
     <div className="mx-auto">
-        <h3>SignUp Completed</h3>
+        <h3>Sent Email</h3>
         <Form className="text-left" onSubmit={handleSubmit}>
             <Button type="submit" className="btn-block" color="primary">Top</Button>
         </Form>
@@ -19,5 +19,5 @@ const MyEnhancedForm = withFormik({
     handleSubmit: props => {
         props.history.push({pathname: '/'})
     },
-})(SignUpComplete);
+})(ForgotPasswordComplete);
 export default MyEnhancedForm;

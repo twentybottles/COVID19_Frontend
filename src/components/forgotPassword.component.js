@@ -1,36 +1,59 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { Button, Form, FormGroup, Label, Input as ReactstrapInput, FormFeedback } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { Button, Form, FormGroup, Label } from 'reactstrap';
 import { withFormik, ErrorMessage, Field } from 'formik';
-import * as yup from 'yup';
+import * as Yup from 'yup';
 
-const Input = ({ name, ...others }) => (
-    <Field name={name} render={({ field }) => <ReactstrapInput {...field} {...others} />}/>);
-const ErrorFormFeedback = ({ name }) => (
-    <ErrorMessage name={name} component={({ children }) => <FormFeedback>{children}</FormFeedback>}/>);
-const ForgotPassword = ({handleSubmit, handleReset, isSubmitting, dirty, errors, touched, history}) => (
+const ErrorInnerMessage = ({ name }) => (<ErrorMessage name={name} component={({ children }) => (
+<span className="errorMsg">{children}</span>)} />);
+const ForgotPassword = props => {
+  const {
+    errors,
+    values,
+    touched,
+    dirty,
+    isSubmitting,
+    handleSubmit,
+  } = props;
+  return (
     <div className="mx-auto">
         <h3>Forgot Password</h3>
         <Form className="text-left" onSubmit={handleSubmit}>
             <FormGroup className="form-group">
                 <Label for="MyEmailAddress">Email</Label>
-                <Input type="MyEmailAddress" className="form-control" id="MyEmailAddress" name="MyEmailAddress" placeholder="Enter email"/>
-                <ErrorFormFeedback name="email" />
+                <ErrorMessage name="myEmailAddress" />
+                <Field type="email" name="myEmailAddress" className="form-control" autoComplete="email" placeholder="Enter Your EmailAddress" valid={dirty && !errors.myEmailAddress} invalid={touched.myEmailAddress && !!errors.myEmailAddress} />
+                {(touched.myEmailAddress && errors.myEmailAddress) ? <ErrorInnerMessage name="myEmailAddress" /> : null}                
             </FormGroup>
-            <Button type="submit" className="btn-block" color="primary" disabled={isSubmitting}>Submit</Button>
+            <Button type="submit" className="btn-block" color="primary" disabled={!dirty || isSubmitting}>Submit</Button>
         </Form>
       <p className="text-right"><Link to="/">Back</Link></p>
     </div>
-);
-
+  );
+};
 const MyEnhancedForm = withFormik({
-    mapPropsToValues: () => ({MyEmailAddress: ''}),
-    handleSubmit: (values, { setSubmitting }) => {
-        setTimeout(() => {alert(JSON.stringify(values, null, 2));setSubmitting(false);}, 3000);
-        console.log('SUBMIT:', values);
-    },
-    validationSchema: yup.object().shape({
-        MyEmailAddress: yup.string().min(3, 'A email must contain more than 3 characters').required('Enter a username'),
+    mapPropsToValues: props => ({myEmailAddress: ''}),
+    validationSchema: Yup.object().shape({
+        myEmailAddress: Yup.string().min(10, 'Username is too short')
+                                    .max(30, 'Username is too long')
+                                    .required('Username is required')
     }),
+    handleSubmit: (values, { props }) => {
+        // fetch('http://example.com',{
+        //     method: "POST",
+        //     body: JSON.stringify(userData),
+        //     headers: {
+        //       'Accept': 'application/json',
+        //       'Content-Type': 'application/json'
+        //     },
+        // }).then(response => {
+        //     response.json().then(data =>{
+        //       console.log("Successful" + data);
+        //     })
+        // });
+        props.history.push({
+            pathname: '/forgot-password-complete'
+        })
+    },
 })(ForgotPassword);
 export default MyEnhancedForm;

@@ -2,11 +2,18 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { Button, Form, FormGroup, Label } from 'reactstrap';
 import { withFormik, ErrorMessage, Field } from 'formik';
+//import PasswordStrengthMeter from '../PasswordStrengthMeter.js';
 import * as Yup from 'yup';
 
+const ErrorInnerMessage = ({ name }) => (<ErrorMessage name={name} component={({ children }) => (
+<span className="errorMsg">{children}</span>)} />);
 const Login = props => {
   const {
+    errors,
     values,
+    touched,
+    dirty,
+    isSubmitting,
     handleSubmit,
   } = props;
   return (
@@ -15,19 +22,19 @@ const Login = props => {
         <Form className="text-left" onSubmit={handleSubmit}>
             <FormGroup className="form-group">
                 <Label for="myUsername">Username</Label>
-                <Field type="email" name="myUsername" className="form-control" autoComplete="email" placeholder="Enter email" />
-                <ErrorMessage name="myUsername" />
+                <Field type="email" name="myUsername" className="form-control" autoComplete="email" placeholder="Enter email" valid={dirty && !errors.myUsername} invalid={touched.myUsername && !!errors.myUsername} />
+                {(touched.myUsername && errors.myUsername) ? <ErrorInnerMessage name="myUsername" /> : null}                
             </FormGroup>
             <FormGroup className="form-group">
                 <Label for="myPassword">Password</Label>
-                <Field type="password" name="myPassword" className="form-control" placeholder="Enter password" />
-                <ErrorMessage name="myPassword" />
+                <Field type="password" name="myPassword" className="form-control" placeholder="Enter password" valid={dirty && !errors.myPassword} invalid={touched.myPassword && !!errors.myPassword} />
+                <ErrorInnerMessage name="myPassword" />
             </FormGroup>
             <FormGroup className="form-group">
                 <Field type="checkbox" name="isAutoLogin" checked={values.isAutoLogin} />
                 <Label for="autoLogin" className="ml-2">Remember me</Label>
             </FormGroup>
-            <Button type="submit" className="btn-block" color="primary">Submit</Button>
+            <Button type="submit" className="btn-block" color="primary" disabled={!dirty || isSubmitting}>Submit</Button>
         </Form>
         <p className="text-right"><Link to="/forgot-password">Forgot password</Link></p>
     </div>
@@ -43,7 +50,8 @@ const MyEnhancedForm = withFormik({
                                 .max(10, 'myPassword is too long')
                                 .required('myPassword is required')
     }),
-    handleSubmit: (values, { props }) => {
+    handleSubmit: (values, { props, setSubmitting }) => {
+        setSubmitting(false);
         // fetch('http://example.com',{
         //     method: "POST",
         //     body: JSON.stringify(userData),
