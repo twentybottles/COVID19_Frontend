@@ -1,82 +1,49 @@
-import React, {Component,PropTypes} from 'react';
-import ReactDom from 'react-dom';
+import React, { Component } from 'react';
+import './PasswordStrengthMeter.css';
 import zxcvbn from 'zxcvbn';
 
-export default class PasswordStrengthMeter extends Component{
-  constructor(props){
-    super(props);
-    this.handleInput = this.handleInput.bind(this);
-    this.state = {
-      resultScore: '',
-      warning: '',
-      suggestions:''
-    };
-  }
+class PasswordStrengthMeter extends Component {
 
-  handleInput(event){
-    event.preventDefault();
-    let { strength } = this.props;
-    strength = (strength) ? strength : {
-      0: "Worst ☹",
-      1: "Bad ☹",
-      2: "Weak ☹",
-      3: "Good ☺",
-      4: "Strong ☻"
-    }
-
-    const password = ReactDom.findDOMNode(this.refs.password);
-    const meter = ReactDom.findDOMNode(this.refs.passwordStrengthMeter);
-    const text = ReactDom.findDOMNode(this.refs.passwordStrengthText);
-
-    let val = password.value;
-    let result = zxcvbn(val);
-
-    // Update the password strength meter
-    meter.value = result.score;
-
-    // Update the text indicator
-    if(val !== "") {
-        this.setState({
-          resultScore:strength[result.score],
-          warning:result.feedback.warning,
-          suggestions:result.feedback.suggestions
-        });
-    }
-    else {
-      this.setState({
-        resultScore:'',
-        warning:'',
-        suggestions:''
-      })
-    }
-
-    if(typeof this.props.onChange === 'function'){
-      this.props.onChange(event);
+  createPasswordLabel = (result) => {
+    switch (result.score) {
+      case 0:
+        return 'Weak';
+      case 1:
+        return 'Weak';
+      case 2:
+        return 'Fair';
+      case 3:
+        return 'Good';
+      case 4:
+        return 'Strong';
+      default:
+        return 'Weak';
     }
   }
 
-  render(){
-    const { passwordText } = this.props;
-    const passwordHeader = (passwordText) ? passwordText : 'Enter Password';
-    const {resultScore,warning,suggestions} = this.state;
-    return(
-      <section>
-        <label forHtml="password">{passwordHeader}</label>
-        <input onInput={this.handleInput} type="password" name="password" id="password" ref="password" />
-
-        <meter max="4" id="password-strength-meter" ref="passwordStrengthMeter"></meter>
-        <p id="password-strength-text" ref="passwordStrengthText">
-          {resultScore &&
-            "Strength: "}
-            <strong>{resultScore}</strong><span className="feedback">{warning + " " + suggestions}</span>
-        </p>
-      </section>
-    )
+  render() {
+    const { password } = this.props;
+    const testedResult = zxcvbn(password);
+    return (
+      <div className="password-strength-meter">
+        <progress
+          className={`password-strength-meter-progress strength-${this.createPasswordLabel(testedResult)}`}
+          value={testedResult.score}
+          max="4"
+        />
+        <br />
+        <label
+          className="password-strength-meter-label"
+        >
+          {password && (
+            <>
+              <strong>Password strength:</strong> {this.createPasswordLabel(testedResult)}
+            </>
+          )}
+        </label>
+      </div>
+    );
   }
 }
 
-PasswordStrengthMeter.propTypes = {
-  passwordText: React.PropTypes.string,
-  strength: React.PropTypes.object,
-  onChange: React.PropTypes.func,
-}
+export default PasswordStrengthMeter;

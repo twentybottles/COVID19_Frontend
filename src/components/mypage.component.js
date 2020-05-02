@@ -9,7 +9,7 @@ const Mypage = props => {
     touched,
     errors,
     handleChange,
-    handleSubmit,
+    handleSubmit
   } = props;
   return (
     <div className="mx-auto">

@@ -5,7 +5,7 @@ import { withFormik } from 'formik';
 const SignUpConfirm = props => {
   const {
     values,
-    handleSubmit,
+    handleSubmit
   } = props;
   return (
     <div className="mx-auto">
@@ -25,7 +25,7 @@ const SignUpConfirm = props => {
             </FormGroup>
             <FormGroup className="form-group">
                 <Label for="password">Password</Label>
-                <p className="text-left">{values.location.state.password}</p>
+                <p className="text-left">{values.location.state.password.replace(/./g, '*')}</p>
             </FormGroup>
             <Button className="btn-block" color="secondary" onClick={() => props.history.goBack()}>Back</Button>
             <Button type="submit" className="btn-block" color="primary">Submit</Button>

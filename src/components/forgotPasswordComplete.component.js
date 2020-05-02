@@ -4,7 +4,7 @@ import { withFormik } from 'formik';
 
 const ForgotPasswordComplete = props => {
   const {
-    handleSubmit,
+    handleSubmit
   } = props;
   return (
     <div className="mx-auto">

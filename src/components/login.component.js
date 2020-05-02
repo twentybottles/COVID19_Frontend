@@ -14,7 +14,7 @@ const Login = props => {
     touched,
     dirty,
     isSubmitting,
-    handleSubmit,
+    handleSubmit
   } = props;
   return (
     <div className="mx-auto">

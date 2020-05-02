@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Form, FormGroup, Label } from 'reactstrap';
 import { withFormik, ErrorMessage, Field } from 'formik';
+import PasswordStrengthMeter from '../PasswordStrengthMeter';
 import * as Yup from 'yup';
 
 const ErrorInnerMessage = ({ name }) => (<ErrorMessage name={name} component={({ children }) => (
@@ -13,7 +14,7 @@ const SignUp = props => {
     touched,
     dirty,
     isSubmitting,
-    handleSubmit,
+    handleSubmit
   } = props;
   return (
     <div className="mx-auto">
@@ -38,6 +39,7 @@ const SignUp = props => {
                 <Label for="password">Password</Label>
                 <Field type="password" name="password" className="form-control" autoComplete="password" placeholder="Enter password" valid={dirty && !errors.password} invalid={touched.password && !!errors.password} />
                 <ErrorInnerMessage name="password" />
+                <PasswordStrengthMeter password={values.password} />
             </FormGroup>
             <FormGroup className="form-group">
                 <Label for="confirmPassword">Confirm Password</Label>
@@ -65,12 +67,7 @@ const MyEnhancedForm = withFormik({
         password: Yup.string().min(8, 'password is too short')
                                 .max(10, 'password is too long')
                                 .required('password is required'),
-        confirmPassword: Yup.string().min(8, 'password is too short')
-                                .max(10, 'password is too long')
-                                .required('password is required')
-    //                             .test('passwords-match', 'Passwords must match ya fool', function(value) {
-    //   return this.parent.password === value;
-    // }),
+        confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
     }),
     handleSubmit: (values, { props }) => {
         props.history.push({
