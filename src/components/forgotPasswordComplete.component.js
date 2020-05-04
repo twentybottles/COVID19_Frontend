@@ -2,10 +2,7 @@ import React from 'react'
 import { Button, Form } from 'reactstrap';
 import { withFormik } from 'formik';
 
-const ForgotPasswordComplete = props => {
-  const {
-    handleSubmit
-  } = props;
+const ForgotPasswordComplete = props => {const {handleSubmit} = props;
   return (
     <div className="mx-auto">
         <Form className="text-left" onSubmit={handleSubmit}>

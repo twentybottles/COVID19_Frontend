@@ -10,8 +10,8 @@ import ForgotPassword from "./components/forgotPassword.component";
 import ForgotPasswordComplete from "./components/forgotPasswordComplete.component";
 
 const LoginController = () => {
-	return (
-	  <BrowserRouter>
+  return (
+    <BrowserRouter>
     <div className="App">
       <nav className="navbar navbar-expand-lg navbar-light fixed-top">
         <div className="container">
@@ -43,8 +43,8 @@ const LoginController = () => {
         </div>
       </div>
     </div>
-	  </BrowserRouter>
-	);
+    </BrowserRouter>
+  );
 };
 
 export default LoginController;
