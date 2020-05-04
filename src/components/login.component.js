@@ -22,26 +22,28 @@ const Login = props => {
         <Form className="text-left" onSubmit={handleSubmit}>
             <FormGroup className="form-group">
                 <Label for="myUsername">Username</Label>
-                <Field type="email" name="myUsername" className="form-control" autoComplete="email" placeholder="Enter email" valid={dirty && !errors.myUsername} invalid={touched.myUsername && !!errors.myUsername} />
+                <Field type="email" name="myUsername" className="form-control" autoComplete="email" placeholder="Enter email" />
                 {(touched.myUsername && errors.myUsername) ? <ErrorInnerMessage name="myUsername" /> : null}                
             </FormGroup>
             <FormGroup className="form-group">
                 <Label for="myPassword">Password</Label>
-                <Field type="password" name="myPassword" className="form-control" placeholder="Enter password" valid={dirty && !errors.myPassword} invalid={touched.myPassword && !!errors.myPassword} />
+                <Field type="password" name="myPassword" className="form-control" placeholder="Enter password" />
                 <ErrorInnerMessage name="myPassword" />
             </FormGroup>
             <FormGroup className="form-group">
-                <Field type="checkbox" name="isAutoLogin" checked={values.isAutoLogin} />
+                <Field type="checkbox" name="isRememberMe" checked={values.isRememberMe} />
                 <Label for="autoLogin" className="ml-2">Remember me</Label>
             </FormGroup>
-            <Button type="submit" className="btn-block" color="primary" disabled={!dirty || isSubmitting}>Submit</Button>
+            <Button type="submit" className="btn-block" color="primary">Submit</Button>
         </Form>
         <p className="text-right"><Link to="/forgot-password">Forgot password</Link></p>
     </div>
   );
 };
 const MyEnhancedForm = withFormik({
-    mapPropsToValues: props => ({myUsername: '', myPassword: '', isAutoLogin: false}),
+    mapPropsToValues: props => ({myUsername: localStorage.getItem('MY_USERNAME'), 
+                                 myPassword: localStorage.getItem('MY_PASSWORD'), 
+                                 isRememberMe: localStorage.getItem('IsRememberMe')}),
     validationSchema: Yup.object().shape({
         myUsername: Yup.string().min(10, 'Username is too short')
                                 .max(30, 'Username is too long')
@@ -51,6 +53,15 @@ const MyEnhancedForm = withFormik({
                                 .required('myPassword is required')
     }),
     handleSubmit: (values, { props, setSubmitting }) => {
+        if(values.isRememberMe) {
+            localStorage.setItem('MY_USERNAME', values.myUsername);
+            localStorage.setItem('MY_PASSWORD', values.myPassword);
+            localStorage.setItem('IsRememberMe', true);
+        } else {
+            localStorage.setItem('MY_USERNAME', '');
+            localStorage.setItem('MY_PASSWORD', '');
+            localStorage.setItem('IsRememberMe', false);
+        }
         setSubmitting(false);
         // fetch('http://example.com',{
         //     method: "POST",

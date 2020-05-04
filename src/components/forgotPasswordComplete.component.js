@@ -8,8 +8,8 @@ const ForgotPasswordComplete = props => {
   } = props;
   return (
     <div className="mx-auto">
-        <h3>Sent Email</h3>
         <Form className="text-left" onSubmit={handleSubmit}>
+            <h5 className="text-center mb-5">Your message has been sent</h5>
             <Button type="submit" className="btn-block" color="primary">Top</Button>
         </Form>
     </div>

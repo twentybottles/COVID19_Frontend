@@ -8,8 +8,8 @@ const SignUpComplete = props => {
   } = props;
   return (
     <div className="mx-auto">
-        <h3>SignUp Completed</h3>
         <Form className="text-left" onSubmit={handleSubmit}>
+            <h5 className="text-center mb-5">SignUp Completed</h5>
             <Button type="submit" className="btn-block" color="primary">Top</Button>
         </Form>
     </div>

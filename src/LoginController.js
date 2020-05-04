@@ -15,7 +15,7 @@ const LoginController = () => {
     <div className="App">
       <nav className="navbar navbar-expand-lg navbar-light fixed-top">
         <div className="container">
-          <Link className="navbar-brand" to={"/"}>Portfolio.com</Link>
+          <Link className="navbar-brand" to={"/"}>COVID-19.com</Link>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">

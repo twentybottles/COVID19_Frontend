@@ -65,7 +65,6 @@ const MyEnhancedForm = withFormik({
                                 .max(30, 'emailAddress is too long')
                                 .required('emailAddress is required'),                                
         password: Yup.string().min(8, 'password is too short')
-                                .max(10, 'password is too long')
                                 .required('password is required'),
         confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
     }),
