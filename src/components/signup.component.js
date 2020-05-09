@@ -5,8 +5,7 @@ import { withFormik, ErrorMessage, Field } from 'formik';
 import PasswordStrengthMeter from '../PasswordStrengthMeter';
 import * as Yup from 'yup';
 
-const ErrorInnerMessage = ({ name }) => (<ErrorMessage name={name} component={({ children }) 
-                                     => (<span className="errorMsg">{children}</span>)} />);
+const ErrorInnerMessage = ({ name }) => (<ErrorMessage name={name} component={({ children }) => (<span className="errorMsg">{children}</span>)} />);
 const SignUp = props => {const {errors, values, touched, dirty, isSubmitting, handleSubmit} = props;
     return (
         <div className="mx-auto">
