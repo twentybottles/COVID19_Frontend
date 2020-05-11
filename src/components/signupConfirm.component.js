@@ -32,11 +32,13 @@ const SignUpConfirm = props => {const {values, handleSubmit} = props;
 };
 
 const MyEnhancedForm = withFormik({
-    handleSubmit: (values, { props }) => {
+    handleSubmit: (values, { props }) => {    
 
         fetch('http://localhost:8080/signupRegister', {
             method: 'POST',
             mode: 'cors',
+            // cache: "no-cache",
+            // credentials: "same-origin",
             // headers: {
             //     "Content-Type": "application/json; charset=utf-8",
             //     'X-XSRF-TOKEN': Cookie.get('XSRF-TOKEN')
@@ -49,11 +51,19 @@ const MyEnhancedForm = withFormik({
                 firstname: values.location.state.firstname,
                 lastname: values.location.state.lastname,
                 password: values.location.state.password
-             })
+             }),
+
         })
-        // props.history.push({
-        //     pathname: '/signup-complete'
-        // })
+        .then(response => response.json())
+        .then(function(result) {
+            if (result) {
+                props.history.push({
+                    pathname: '/signup-complete'
+                });
+            }
+        })
+        .catch(error => console.error('Error:', error));
+
     },
 })(SignUpConfirm);
 export default MyEnhancedForm;
