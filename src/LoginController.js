@@ -8,6 +8,7 @@ import SignUpConfirm from "./components/signupConfirm.component";
 import SignUpComplete from "./components/signupComplete.component";
 import ForgotPassword from "./components/forgotPassword.component";
 import ForgotPasswordComplete from "./components/forgotPasswordComplete.component";
+import Command from "./components/command.component";
 
 const LoginController = () => {
   return (
@@ -39,6 +40,7 @@ const LoginController = () => {
             <Route path="/signup-complete" component={SignUpComplete} />
             <Route path="/forgot-password" component={ForgotPassword} />
             <Route path="/forgot-password-complete" component={ForgotPasswordComplete} />
+            <Route exact path="/command" component={Command} />
           </Switch>
         </div>
       </div>

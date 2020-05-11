@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Form, FormGroup, Label } from 'reactstrap';
 import { withFormik } from 'formik';
+import Cookie from 'js-cookie'
 
 const SignUpConfirm = props => {const {values, handleSubmit} = props;
     return (
@@ -29,11 +30,30 @@ const SignUpConfirm = props => {const {values, handleSubmit} = props;
         </div>
     );
 };
+
 const MyEnhancedForm = withFormik({
-    handleSubmit: props => {
-        props.history.push({
-            pathname: '/signup-complete'
+    handleSubmit: (values, { props }) => {
+
+        fetch('http://localhost:8080/signupRegister', {
+            method: 'POST',
+            mode: 'cors',
+            // headers: {
+            //     "Content-Type": "application/json; charset=utf-8",
+            //     'X-XSRF-TOKEN': Cookie.get('XSRF-TOKEN')
+            // },
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            body : JSON.stringify({ 
+                emailAddress: values.location.state.emailAddress,
+                firstname: values.location.state.firstname,
+                lastname: values.location.state.lastname,
+                password: values.location.state.password
+             })
         })
+        // props.history.push({
+        //     pathname: '/signup-complete'
+        // })
     },
 })(SignUpConfirm);
 export default MyEnhancedForm;

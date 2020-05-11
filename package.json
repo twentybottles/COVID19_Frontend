@@ -9,6 +9,8 @@
     "bootstrap": "^4.4.1",
     "formik": "^2.1.4",
     "isemail": "^3.2.0",
+    "js-cookie": "^2.2.1",
+    "js-cookies": "^1.0.4",
     "node-sass": "^4.13.1",
     "npm": "^6.13.7",
     "prop-types": "^15.7.2",
