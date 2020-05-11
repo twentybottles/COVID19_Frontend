@@ -59,11 +59,39 @@ const MyEnhancedForm = withFormik({
                                 .required('password is required'),
         confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
     }),
-    handleSubmit: (values, { props }) => {
-        props.history.push({
-            pathname: '/signup-confirm',
-            state: { firstname: values.firstname, lastname: values.lastname, emailAddress: values.emailAddress, password: values.password}
+    // handleSubmit: (values, { props }) => {
+    //     props.history.push({
+    //         pathname: '/signup-confirm',
+    //         state: { firstname: values.firstname, lastname: values.lastname, emailAddress: values.emailAddress, password: values.password}
+    //     })
+    // },
+    handleSubmit: (values, { setErrors, setSubmitting, props }) => {
+        setSubmitting(true);
+        fetch('http://localhost:8080/signupSearch', {
+            method: 'POST',
+            mode: 'cors',
+            // cache: "no-cache",
+            // credentials: "same-origin",
+            // headers: {
+            //     "Content-Type": "application/json; charset=utf-8",
+            //     'X-XSRF-TOKEN': Cookie.get('XSRF-TOKEN')
+            // },
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            body : values.emailAddress
         })
+        .then(response => response.json())
+        .then(function(result) {
+            if (result) {
+                return setErrors({ emailAddress : 'このメールアドレスはすでに登録されています' });
+            }
+            props.history.push({
+                pathname: '/signup-confirm',
+                state: { firstname: values.firstname, lastname: values.lastname, emailAddress: values.emailAddress, password: values.password}
+            })
+        })
+        .catch(error => console.error('Error:', error));
     },
 })(SignUp);
 export default MyEnhancedForm;
