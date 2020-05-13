@@ -18,23 +18,23 @@ const SignUp = props => {const {errors, values, touched, dirty, isSubmitting, ha
                 </FormGroup>
                 <FormGroup className="form-group">
                     <Label for="Last name">Lastname</Label>
-                    <Field type="text" name="lastname" className="form-control" autoComplete="lastname" placeholder="Enter lastname" valid={dirty && !errors.lastname} invalid={touched.lastname && !!errors.lastname} />
+                    <Field type="text" name="lastname" className="form-control" autoComplete="lastname" placeholder="Enter lastname" />
                     {(touched.lastname && errors.lastname) ? <ErrorInnerMessage name="lastname" /> : null}
                 </FormGroup>
                 <FormGroup className="form-group">
                     <Label for="emailAddress">EmailAddress</Label>
-                    <Field type="email" name="emailAddress" className="form-control" autoComplete="emailAddress" placeholder="Enter emailAddress" valid={dirty && !errors.emailAddress} invalid={touched.emailAddress && !!errors.emailAddress} />
+                    <Field type="email" name="emailAddress" className="form-control" autoComplete="emailAddress" placeholder="Enter emailAddress" />
                     {(touched.emailAddress && errors.emailAddress) ? <ErrorInnerMessage name="emailAddress" /> : null}
                 </FormGroup>
                 <FormGroup className="form-group">
                     <Label for="password">Password</Label>
-                    <Field type="password" name="password" className="form-control" autoComplete="password" placeholder="Enter password" valid={dirty && !errors.password} invalid={touched.password && !!errors.password} />
+                    <Field type="password" name="password" className="form-control" autoComplete="password" placeholder="Enter password" />
                     <ErrorInnerMessage name="password" />
                     <PasswordStrengthMeter password={values.password} />
                 </FormGroup>
                 <FormGroup className="form-group">
                     <Label for="confirmPassword">Confirm Password</Label>
-                    <Field type="password" name="confirmPassword" className="form-control" autoComplete="confirmPassword" placeholder="Enter confirmPassword" valid={dirty && !errors.confirmPassword} invalid={touched.confirmPassword && !!errors.confirmPassword} />
+                    <Field type="password" name="confirmPassword" className="form-control" autoComplete="confirmPassword" placeholder="Enter confirmPassword" />
                     <ErrorInnerMessage name="confirmPassword" />
                 </FormGroup>
                 <Button type="submit" className="btn-block" color="primary" disabled={!dirty || isSubmitting}>Confirm</Button>
@@ -66,7 +66,9 @@ const MyEnhancedForm = withFormik({
     //     })
     // },
     handleSubmit: (values, { setErrors, setSubmitting, props }) => {
-        setSubmitting(true);
+        
+        setSubmitting(false);
+        
         fetch('http://localhost:8080/signupSearch', {
             method: 'POST',
             mode: 'cors',
@@ -84,7 +86,7 @@ const MyEnhancedForm = withFormik({
         .then(response => response.json())
         .then(function(result) {
             if (result) {
-                return setErrors({ emailAddress : 'このメールアドレスはすでに登録されています' });
+                return setErrors({ emailAddress : 'Email Address is already registered' });
             }
             props.history.push({
                 pathname: '/signup-confirm',
@@ -92,6 +94,7 @@ const MyEnhancedForm = withFormik({
             })
         })
         .catch(error => console.error('Error:', error));
+        
     },
 })(SignUp);
 export default MyEnhancedForm;

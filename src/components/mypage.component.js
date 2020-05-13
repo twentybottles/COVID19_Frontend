@@ -12,7 +12,7 @@ const Mypage = props => {const {values, touched, errors, handleChange, handleSub
                     <Label for="myUsername">menu</Label>
                 </FormGroup>
                 <FormGroup className="form-group">
-                    <Label for="myPassword">{props.location.state.myUsername}</Label>
+                    <Label for="myPassword"></Label>
                 </FormGroup>
                 <Button type="submit" className="btn-block" color="primary">Search</Button>
             </Form>

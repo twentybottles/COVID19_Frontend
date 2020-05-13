@@ -5,7 +5,7 @@ import { withFormik, ErrorMessage, Field } from 'formik';
 import * as Yup from 'yup';
 
 const ErrorInnerMessage = ({ name }) => (<ErrorMessage name={name} component={({ children }) => (<span className="errorMsg">{children}</span>)} />);
-const ForgotPassword = props => {const {errors, values, touched, dirty, isSubmitting, handleSubmit} = props;
+const ForgotPassword = props => {const {errors, touched, dirty, isSubmitting, handleSubmit} = props;
     return (
         <div className="mx-auto">
             <h3>Forgot Password</h3>

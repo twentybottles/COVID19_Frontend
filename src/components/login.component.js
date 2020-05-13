@@ -13,7 +13,7 @@ const Login = props => {const {errors, values, touched, dirty, isSubmitting, han
                 <FormGroup className="form-group">
                     <Label for="myUsername">Username</Label>
                     <Field type="email" name="myUsername" className="form-control" autoComplete="email" placeholder="Enter email" />
-                    {(touched.myUsername && errors.myUsername) ? <ErrorInnerMessage name="myUsername" /> : null}                
+                    {(touched.myUsername && errors.myUsername) ? <ErrorInnerMessage name="myUsername" /> : null}
                 </FormGroup>
                 <FormGroup className="form-group">
                     <Label for="myPassword">Password</Label>
@@ -22,18 +22,17 @@ const Login = props => {const {errors, values, touched, dirty, isSubmitting, han
                 </FormGroup>
                 <FormGroup className="form-group">
                     <Field type="checkbox" name="isRememberMe" checked={values.isRememberMe} />
-                    <Label for="autoLogin" className="ml-2">Remember me</Label>
+                    <Label for="autoLogin" className="ml-2 mb-0">Remember me</Label><br />
+                    <ErrorInnerMessage className="" name="authentication" />
                 </FormGroup>
-                <Button type="submit" className="btn-block" color="primary">Submit</Button>
+                <Button type="submit" className="btn-block" color="primary" disabled={!dirty || isSubmitting}>Submit</Button>
             </Form>
             <p className="text-right"><Link to="/forgot-password">Forgot password</Link></p>
         </div>
     );
 };
 const MyEnhancedForm = withFormik({
-    mapPropsToValues: props => ({myUsername: localStorage.getItem('MY_USERNAME'), 
-                                 myPassword: localStorage.getItem('MY_PASSWORD'), 
-                                 isRememberMe: localStorage.getItem('IsRememberMe')}),
+    mapPropsToValues: props => ({myUsername: '', myPassword: '', isRememberMe: false, authentication: ''}),
     validationSchema: Yup.object().shape({
         myUsername: Yup.string().min(10, 'Username is too short')
                                 .max(30, 'Username is too long')
@@ -42,33 +41,37 @@ const MyEnhancedForm = withFormik({
                                 .max(10, 'myPassword is too long')
                                 .required('myPassword is required')
     }),
-    handleSubmit: (values, { props, setSubmitting }) => {
-        if(values.isRememberMe) {
-            localStorage.setItem('MY_USERNAME', values.myUsername);
-            localStorage.setItem('MY_PASSWORD', values.myPassword);
-            localStorage.setItem('IsRememberMe', true);
-        } else {
-            localStorage.setItem('MY_USERNAME', '');
-            localStorage.setItem('MY_PASSWORD', '');
-            localStorage.setItem('IsRememberMe', false);
-        }
+    handleSubmit: (values, { setErrors, props, setSubmitting }) => {
+
         setSubmitting(false);
-        // fetch('http://example.com',{
-        //     method: "POST",
-        //     body: JSON.stringify(userData),
-        //     headers: {
-        //       'Accept': 'application/json',
-        //       'Content-Type': 'application/json'
-        //     },
-        // }).then(response => {
-        //     response.json().then(data =>{
-        //       console.log("Successful" + data);
-        //     })
-        // });
-        props.history.push({
-            pathname: '/mypage',
-            state: { myUsername: values.myUsername, myPassword: values.myPassword}
+
+        fetch('http://localhost:8080/loginAuthentication', {
+            method: 'POST',
+            mode: 'cors',
+            // cache: "no-cache",
+            // credentials: "same-origin",
+            // headers: {
+            //     "Content-Type": "application/json; charset=utf-8",
+            //     'X-XSRF-TOKEN': Cookie.get('XSRF-TOKEN')
+            // },
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            body : JSON.stringify({ 
+                myUsername: values.myUsername,
+                myPassword: values.myPassword
+             }),
+
         })
+        .then(response => response.json())
+        .then(function(response) {
+            if (response.length > 0) {
+                props.history.push('/mypage?id='+response[0].id);
+            }
+            return setErrors({ authentication : 'Either Username or Password is invalid' });
+        })
+        .catch(error => console.error('Error:', error));
+
     },
 })(Login);
 export default MyEnhancedForm;

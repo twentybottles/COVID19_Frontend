@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Form, FormGroup, Label } from 'reactstrap';
 import { withFormik } from 'formik';
-import Cookie from 'js-cookie'
+//import Cookie from 'js-cookie'
 
 const SignUpConfirm = props => {const {values, handleSubmit} = props;
     return (
@@ -33,7 +33,7 @@ const SignUpConfirm = props => {const {values, handleSubmit} = props;
 
 const MyEnhancedForm = withFormik({
     handleSubmit: (values, { props }) => {    
-
+        
         fetch('http://localhost:8080/signupRegister', {
             method: 'POST',
             mode: 'cors',
@@ -57,9 +57,7 @@ const MyEnhancedForm = withFormik({
         .then(response => response.json())
         .then(function(result) {
             if (result) {
-                props.history.push({
-                    pathname: '/signup-complete'
-                });
+                props.history.push({ pathname: '/signup-complete' });
             }
         })
         .catch(error => console.error('Error:', error));

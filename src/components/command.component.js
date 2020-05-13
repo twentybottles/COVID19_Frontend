@@ -1,9 +1,8 @@
 import React from 'react'
-import { Button, Form, FormGroup, Label } from 'reactstrap';
-import { withFormik, Field } from 'formik';
-import * as yup from 'yup';
+import { } from 'reactstrap';
+import { withFormik } from 'formik';
 
-const Mypage = props => {const {values, touched, errors, handleChange, handleSubmit} = props;
+const Aaa = props => {
     return (
         <div className="aaa">
             <p>curl http://localhost:8080/signup -X POST</p>
@@ -26,5 +25,5 @@ const MyEnhancedForm = withFormik({
         //     })
         // });
     },
-})(Mypage);
+})(Aaa);
 export default MyEnhancedForm;
