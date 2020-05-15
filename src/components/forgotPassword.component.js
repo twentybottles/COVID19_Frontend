@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 const ErrorInnerMessage = ({ name }) => (<ErrorMessage name={name} component={({ children }) => (<span className="errorMsg">{children}</span>)} />);
 const ForgotPassword = props => {const {errors, touched, dirty, isSubmitting, handleSubmit} = props;
     return (
-        <div className="mx-auto">
+        <div className="auth-inner">
             <h3>Forgot Password</h3>
             <Form className="text-left" onSubmit={handleSubmit}>
                 <FormGroup className="form-group">

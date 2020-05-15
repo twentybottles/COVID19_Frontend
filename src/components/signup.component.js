@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 const ErrorInnerMessage = ({ name }) => (<ErrorMessage name={name} component={({ children }) => (<span className="errorMsg">{children}</span>)} />);
 const SignUp = props => {const {errors, values, touched, dirty, isSubmitting, handleSubmit} = props;
     return (
-        <div className="mx-auto">
+        <div className="auth-inner">
             <h3>Sign Up</h3>
             <Form className="text-left" onSubmit={handleSubmit}>
                 <FormGroup className="form-group">

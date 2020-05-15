@@ -5,7 +5,7 @@ import { withFormik } from 'formik';
 
 const SignUpConfirm = props => {const {values, handleSubmit} = props;
     return (
-        <div className="mx-auto">
+        <div className="auth-inner">
             <h3>SignUp Confirm</h3>
             <Form className="text-left" onSubmit={handleSubmit}>
                 <FormGroup className="form-group">

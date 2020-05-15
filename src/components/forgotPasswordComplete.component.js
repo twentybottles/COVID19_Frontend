@@ -4,7 +4,7 @@ import { withFormik } from 'formik';
 
 const ForgotPasswordComplete = props => {const {handleSubmit} = props;
   return (
-    <div className="mx-auto">
+    <div className="auth-inner">
         <Form className="text-left" onSubmit={handleSubmit}>
             <h5 className="text-center mb-5">Your message has been sent</h5>
             <Button type="submit" className="btn-block" color="primary">Top</Button>

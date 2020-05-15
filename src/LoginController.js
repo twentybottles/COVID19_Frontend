@@ -31,18 +31,16 @@ const LoginController = () => {
       </nav>
 
       <div className="auth-wrapper">
-        <div className="auth-inner">
-          <Switch>
-            <Route exact path='/' component={Login} />
-            <Route exact path="/mypage" component={Mypage} />
-            <Route path="/signup" component={SignUp} />
-            <Route path="/signup-confirm" component={SignUpConfirm} />
-            <Route path="/signup-complete" component={SignUpComplete} />
-            <Route path="/forgot-password" component={ForgotPassword} />
-            <Route path="/forgot-password-complete" component={ForgotPasswordComplete} />
-            <Route exact path="/command" component={Command} />
-          </Switch>
-        </div>
+        <Switch>
+          <Route exact path='/' component={Login} />
+          <Route exact path="/mypage" component={Mypage} />
+          <Route path="/signup" component={SignUp} />
+          <Route path="/signup-confirm" component={SignUpConfirm} />
+          <Route path="/signup-complete" component={SignUpComplete} />
+          <Route path="/forgot-password" component={ForgotPassword} />
+          <Route path="/forgot-password-complete" component={ForgotPasswordComplete} />
+          <Route exact path="/command" component={Command} />
+        </Switch>
       </div>
     </div>
     </BrowserRouter>
