@@ -1,48 +1,57 @@
-import React from 'react'
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { Button, Form, FormGroup, Label } from 'reactstrap';
 import { withFormik, ErrorMessage, Field } from 'formik';
 import PasswordStrengthMeter from '../PasswordStrengthMeter';
 import * as Yup from 'yup';
 
+class SignUp extends Component {
+
+    render() {
+
+        const {errors, values, touched, dirty, isSubmitting, handleSubmit} = this.props;
+
+        return (
+            <div className="auth-inner">
+                <h3>Sign Up</h3>
+                <Form className="text-left" onSubmit={handleSubmit}>
+                    <FormGroup className="form-group">
+                        <Label for="First name">Firstname</Label>
+                        <Field type="text" name="firstname" className="form-control" autoComplete="firstname" placeholder="Enter firstname" />
+                        {(touched.firstname && errors.firstname) ? <ErrorInnerMessage name="firstname" /> : null}
+                    </FormGroup>
+                    <FormGroup className="form-group">
+                        <Label for="Last name">Lastname</Label>
+                        <Field type="text" name="lastname" className="form-control" autoComplete="lastname" placeholder="Enter lastname" />
+                        {(touched.lastname && errors.lastname) ? <ErrorInnerMessage name="lastname" /> : null}
+                    </FormGroup>
+                    <FormGroup className="form-group">
+                        <Label for="emailAddress">EmailAddress</Label>
+                        <Field type="email" name="emailAddress" className="form-control" autoComplete="emailAddress" placeholder="Enter emailAddress" />
+                        {(touched.emailAddress && errors.emailAddress) ? <ErrorInnerMessage name="emailAddress" /> : null}
+                    </FormGroup>
+                    <FormGroup className="form-group">
+                        <Label for="password">Password</Label>
+                        <Field type="password" name="password" className="form-control" autoComplete="password" placeholder="Enter password" />
+                        <ErrorInnerMessage name="password" />
+                        <PasswordStrengthMeter password={values.password} />
+                    </FormGroup>
+                    <FormGroup className="form-group">
+                        <Label for="confirmPassword">Confirm Password</Label>
+                        <Field type="password" name="confirmPassword" className="form-control" autoComplete="confirmPassword" placeholder="Enter confirmPassword" />
+                        <ErrorInnerMessage name="confirmPassword" />
+                    </FormGroup>
+                    <Button type="submit" className="btn-block" color="primary" disabled={!dirty || isSubmitting}>Confirm</Button>
+                </Form>
+            </div>
+        );
+
+    }
+
+}
+
 const ErrorInnerMessage = ({ name }) => (<ErrorMessage name={name} component={({ children }) => (<span className="errorMsg">{children}</span>)} />);
-const SignUp = props => {const {errors, values, touched, dirty, isSubmitting, handleSubmit} = props;
-    return (
-        <div className="auth-inner">
-            <h3>Sign Up</h3>
-            <Form className="text-left" onSubmit={handleSubmit}>
-                <FormGroup className="form-group">
-                    <Label for="First name">Firstname</Label>
-                    <Field type="text" name="firstname" className="form-control" autoComplete="firstname" placeholder="Enter firstname" />
-                    {(touched.firstname && errors.firstname) ? <ErrorInnerMessage name="firstname" /> : null}
-                </FormGroup>
-                <FormGroup className="form-group">
-                    <Label for="Last name">Lastname</Label>
-                    <Field type="text" name="lastname" className="form-control" autoComplete="lastname" placeholder="Enter lastname" />
-                    {(touched.lastname && errors.lastname) ? <ErrorInnerMessage name="lastname" /> : null}
-                </FormGroup>
-                <FormGroup className="form-group">
-                    <Label for="emailAddress">EmailAddress</Label>
-                    <Field type="email" name="emailAddress" className="form-control" autoComplete="emailAddress" placeholder="Enter emailAddress" />
-                    {(touched.emailAddress && errors.emailAddress) ? <ErrorInnerMessage name="emailAddress" /> : null}
-                </FormGroup>
-                <FormGroup className="form-group">
-                    <Label for="password">Password</Label>
-                    <Field type="password" name="password" className="form-control" autoComplete="password" placeholder="Enter password" />
-                    <ErrorInnerMessage name="password" />
-                    <PasswordStrengthMeter password={values.password} />
-                </FormGroup>
-                <FormGroup className="form-group">
-                    <Label for="confirmPassword">Confirm Password</Label>
-                    <Field type="password" name="confirmPassword" className="form-control" autoComplete="confirmPassword" placeholder="Enter confirmPassword" />
-                    <ErrorInnerMessage name="confirmPassword" />
-                </FormGroup>
-                <Button type="submit" className="btn-block" color="primary" disabled={!dirty || isSubmitting}>Confirm</Button>
-            </Form>
-            <p className="text-right">Already registered <Link to="/">sign in?</Link></p>
-        </div>
-    );
-};
+
 const MyEnhancedForm = withFormik({
     mapPropsToValues: props => ({firstname: '', lastname: '', emailAddress: '', password: '', confirmPassword: ''}),
     validationSchema: Yup.object().shape({
@@ -97,4 +106,5 @@ const MyEnhancedForm = withFormik({
         
     },
 })(SignUp);
+
 export default MyEnhancedForm;

@@ -1,10 +1,16 @@
-import React from 'react';
-import LoginController from './LoginController';
+import React, { Component } from 'react';
+import ViewController from './ViewController';
 
-const App = () => (
-  <>
-    <LoginController />
-  </>
-);
+class App extends Component {
+	
+  render() {
+
+    return (
+      <ViewController />
+    );
+  
+  }
+  
+}
 
 export default App;
