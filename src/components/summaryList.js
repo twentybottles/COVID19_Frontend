@@ -9,7 +9,7 @@ class SummaryList extends Component {
 
         return (
             <tr>
-                <td className="w20"><span className={"flag-icon-"+this.props.index.CountryCode.toLowerCase()+ " flagIcon"}>　</span></td>
+                <td><span className={"flag-icon-"+this.props.index.CountryCode.toLowerCase()+ " flagIcon"}>　</span></td>
                 <td>{this.props.index.Country}</td>
                 <td>{this.props.index.NewConfirmed}</td>
                 <td>{this.props.index.TotalConfirmed}</td>

@@ -55,7 +55,7 @@ class Mypage extends Component {
 						</thead>
 						<tbody className="text-right">
 							<tr className="active text-danger">
-							    <td colspan="2">{this.state.country}</td>
+							    <td colspan="2">{this.state.country + this.state.date}</td>
 							    <td>{this.state.newConfirmed}</td>
 							    <td>{this.state.totalConfirmed}</td>
 							    <td>{this.state.newDeaths}</td>
@@ -130,14 +130,14 @@ class Mypage extends Component {
 	        .then(response => response.json())
 	        .then((json) => {
 				this.setState({
-					country: "Today's Summary",
+					country: "Total",
 					newConfirmed: json.Global.NewConfirmed,
 				    totalConfirmed: json.Global.TotalConfirmed,
 				    newDeaths: json.Global.NewDeaths,
 				    totalDeaths: json.Global.TotalDeaths,
 				    newRecovered: json.Global.NewRecovered,
 				    totalRecovered: json.Global.TotalRecovered,
-					date: json.Date,
+					date: "（" + json.Date + "）",
 					countries: json.Countries
 				});
 	      	})
