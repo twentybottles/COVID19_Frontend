@@ -34,9 +34,6 @@ class Mypage extends Component {
 
     render() {
 
-        // const {errors, values, touched, dirty, isSubmitting, handleSubmit} = this.props;
-        const {handleSubmit} = this.props;
-
         return (
             <div className="auth-inner-large">
             	<div className="text-right">
@@ -47,7 +44,7 @@ class Mypage extends Component {
 				　　<table className="table table-condensed table-striped">
 						<thead>
 							<tr>
-							    <th>Country</th>
+							    <th colspan="2" className="text-center">Country</th>
 							    <th>NewConfirmed</th>
 							    <th>TotalConfirmed</th>
 							    <th>NewDeaths</th>
@@ -58,7 +55,7 @@ class Mypage extends Component {
 						</thead>
 						<tbody className="text-right">
 							<tr className="active text-danger">
-							    <td>{this.state.country}</td>
+							    <td colspan="2">{this.state.country}</td>
 							    <td>{this.state.newConfirmed}</td>
 							    <td>{this.state.totalConfirmed}</td>
 							    <td>{this.state.newDeaths}</td>

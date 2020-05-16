@@ -95,6 +95,11 @@ body, html, .App, #root, .auth-wrapper {
   overflow: scroll;
 }
 
+.flagIcon {
+  width:20px;
+  display:inline-block;
+}
+
 table {
   table-layout: fixed;
   width: 100%;
