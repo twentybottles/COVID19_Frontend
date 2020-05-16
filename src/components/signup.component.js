@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
 import { Button, Form, FormGroup, Label } from 'reactstrap';
 import { withFormik, ErrorMessage, Field } from 'formik';
 import PasswordStrengthMeter from '../PasswordStrengthMeter';
@@ -68,12 +67,6 @@ const MyEnhancedForm = withFormik({
                                 .required('password is required'),
         confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
     }),
-    // handleSubmit: (values, { props }) => {
-    //     props.history.push({
-    //         pathname: '/signup-confirm',
-    //         state: { firstname: values.firstname, lastname: values.lastname, emailAddress: values.emailAddress, password: values.password}
-    //     })
-    // },
     handleSubmit: (values, { setErrors, setSubmitting, props }) => {
         
         setSubmitting(false);

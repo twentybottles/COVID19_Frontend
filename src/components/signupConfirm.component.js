@@ -7,7 +7,7 @@ class SignUpConfirm extends Component {
 
     render() {
 
-        const {errors, values, touched, dirty, isSubmitting, handleSubmit} = this.props;
+        const {values, handleSubmit} = this.props;
 
         return (
             <div className="auth-inner">
