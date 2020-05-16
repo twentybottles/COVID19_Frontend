@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, DropdownMenu, MenuItem } from 'reactstrap';
-import { withFormik, ErrorMessage, Field } from 'formik';
-import { Dropdown } from 'semantic-ui-react'
-import 'semantic-ui-css/semantic.min.css';
-
+import {} from 'reactstrap';
+import { withFormik } from 'formik';
+import SummaryList from './summaryList.js';
+import DropDown from './dropDown.js';
 
 class Mypage extends Component {
 
@@ -13,14 +12,15 @@ class Mypage extends Component {
 
 	   this.state = {
 		   date: '',
-		   firstName: '',
-		   lastName: '',
+		   name: '',
+		   country: '',
 		   newConfirmed: '',
 		   totalConfirmed: '',
 		   newDeaths: '',
 		   totalDeaths: '',
 		   newRecovered: '',
 		   totalRecovered: '',
+		   countries:[]
 	   }
   }
 
@@ -39,35 +39,26 @@ class Mypage extends Component {
 
         return (
             <div className="auth-inner-large">
-				<Dropdown text={this.state.name}>
-					<Dropdown.Menu>
-						<Dropdown.Item text='Profile' />
-						<Dropdown.Divider />
-						<Dropdown.Item text='Select Country' />
-						<Dropdown.Divider />
-						<Dropdown.Item text='Download' />
-						<Dropdown.Divider />
-						<Dropdown.Item text='Inquiry' />
-						<Dropdown.Divider />
-						<Dropdown.Item text='Sign out' />
-					</Dropdown.Menu>
-				</Dropdown>
-				<div class="table-responsive">
-				　　<table class="table table-condensed text-right">
+            	<div className="text-right">
+            		<DropDown key="name" index={this.state.name} />
+				</div>
+	        	<h1 className="text-center">COVID19　Summary</h1>
+				<div className="table-responsive wrap-table">
+				　　<table className="table table-condensed table-striped">
 						<thead>
 							<tr>
-							    <th>Date</th>
-							    <th>newConfirmed</th>
-							    <th>totalConfirmed</th>
-							    <th>newDeaths</th>
-							    <th>totalDeaths</th>
-							    <th>newRecovered</th>
-							    <th>totalRecovered</th>
+							    <th>Country</th>
+							    <th>NewConfirmed</th>
+							    <th>TotalConfirmed</th>
+							    <th>NewDeaths</th>
+							    <th>TotalDeaths</th>
+							    <th>NewRecovered</th>
+							    <th>TotalRecovered</th>
 							</tr>
 						</thead>
-						<tbody class="text-right">
-							<tr class="active">
-							    <td>{this.state.date}</td>
+						<tbody className="text-right">
+							<tr className="active text-danger">
+							    <td>{this.state.country}</td>
 							    <td>{this.state.newConfirmed}</td>
 							    <td>{this.state.totalConfirmed}</td>
 							    <td>{this.state.newDeaths}</td>
@@ -75,6 +66,11 @@ class Mypage extends Component {
 							    <td>{this.state.newRecovered}</td>
 							    <td>{this.state.totalRecovered}</td>
 							</tr>
+
+							{this.state.countries.map((country, index) => {
+      							return <SummaryList key={index} index={country} />;
+   	 						})}							
+
 						</tbody>
 				　　</table>
 				</div>
@@ -137,6 +133,7 @@ class Mypage extends Component {
 	        .then(response => response.json())
 	        .then((json) => {
 				this.setState({
+					country: "Today's Summary",
 					newConfirmed: json.Global.NewConfirmed,
 				    totalConfirmed: json.Global.TotalConfirmed,
 				    newDeaths: json.Global.NewDeaths,
@@ -151,47 +148,6 @@ class Mypage extends Component {
 
 	}
 }
-
-const ErrorInnerMessage = ({ name }) => (<ErrorMessage name={name} component={({ children }) => (<span className="errorMsg">{children}</span>)} />);
-
-const friendOptions = [
-  {
-    key: 'Jenny Hess',
-    text: 'Jenny Hess',
-    value: 'Jenny Hess',
-    image: { avatar: true, src: 'https://react.semantic-ui.com/images/avatar/small/jenny.jpg' },
-  },
-  {
-    key: 'Elliot Fu',
-    text: 'Elliot Fu',
-    value: 'Elliot Fu',
-    image: { avatar: true, src: 'https://react.semantic-ui.com/images/avatar/small/elliot.jpg' },
-  },
-  {
-    key: 'Stevie Feliciano',
-    text: 'Stevie Feliciano',
-    value: 'Stevie Feliciano',
-    image: { avatar: true, src: 'https://react.semantic-ui.com/images/avatar/small/stevie.jpg' },
-  },
-  {
-    key: 'Christian',
-    text: 'Christian',
-    value: 'Christian',
-    image: { avatar: true, src: 'https://react.semantic-ui.com/images/avatar/small/christian.jpg' },
-  },
-  {
-    key: 'Matt',
-    text: 'Matt',
-    value: 'Matt',
-    image: { avatar: true, src: 'https://react.semantic-ui.com/images/avatar/small/matt.jpg' },
-  },
-  {
-    key: 'Justen Kitsune',
-    text: 'Justen Kitsune',
-    value: 'Justen Kitsune',
-    image: { avatar: true, src: 'https://react.semantic-ui.com/images/avatar/small/justen.jpg' },
-  },
-]
 
 const MyEnhancedForm = withFormik({
     enableReinitialize: true,

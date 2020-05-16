@@ -46,10 +46,11 @@ body, html, .App, #root, .auth-wrapper {
 
 .auth-inner-large {
   width: 90%;
+  height:80%;
   margin: auto;
   background: #ffffff;
   box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
-  padding: 40px 55px 45px 55px;
+  padding: 20px 55px 45px 55px;
   border-radius: 15px;
   transition: all .3s;
 }
@@ -87,4 +88,26 @@ body, html, .App, #root, .auth-wrapper {
 
 .checkbox {
   mergin-right: 10px;
+}
+
+.wrap-table {
+  height: 90%;
+  overflow: scroll;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+th {
+  background-color: #666666;
+  color: white;  
+}
+
+thead tr th {
+  text-align: right;
+  position: sticky;
+  top: 0;
+  z-index:1;
 }
