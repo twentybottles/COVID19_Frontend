@@ -64,7 +64,7 @@ class Mypage extends Component {
 						</tr>
 
 						{this.state.countries.map((country, index) => {
-  							return <SummaryList key={index} index={country} />;
+  							return <SummaryList key={country.CountryCode} country={country} />;
 	 						})}							
 
 					</tbody>

@@ -11,14 +11,21 @@ class SummaryList extends Component {
         return (
 
             <tr>
-                <td><ModalWindow countryCode={this.props.index.CountryCode}/></td>
-                <td>{this.props.index.Country}</td>
-                <td>{this.props.index.NewConfirmed}</td>
-                <td>{this.props.index.TotalConfirmed}</td>
-                <td>{this.props.index.NewDeaths}</td>
-                <td>{this.props.index.TotalDeaths}</td>
-                <td>{this.props.index.NewRecovered}</td>
-                <td>{this.props.index.TotalRecovered}</td>
+                <td>
+                    <ModalWindow 
+                        countryName={this.props.country.Country} 
+                        countryCode={this.props.country.CountryCode}
+                        countrySlug={this.props.country.CountrySlug}
+                        className="modal-xl"
+                    />
+                </td>
+                <td>{this.props.country.Country}</td>
+                <td>{this.props.country.NewConfirmed}</td>
+                <td>{this.props.country.TotalConfirmed}</td>
+                <td>{this.props.country.NewDeaths}</td>
+                <td>{this.props.country.TotalDeaths}</td>
+                <td>{this.props.country.NewRecovered}</td>
+                <td>{this.props.country.TotalRecovered}</td>
             </tr>
 
         );
