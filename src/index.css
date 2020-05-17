@@ -45,7 +45,7 @@ body, html, .App, #root, .auth-wrapper {
 }
 
 .auth-inner-large {
-  width: 90%;
+  width: 70%;
   height:80%;
   margin: auto;
   background: #ffffff;
@@ -91,8 +91,7 @@ body, html, .App, #root, .auth-wrapper {
 }
 
 .wrap-table {
-  height: 90%;
-  overflow: scroll;
+  height: 85%;
 }
 
 .flagIcon {
