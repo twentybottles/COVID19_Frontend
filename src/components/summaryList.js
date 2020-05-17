@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { withFormik } from 'formik';
 import '../flag-icon-css-master/css/flag-icon.css';
+import ModalWindow from './modalWindow.js';
 
 
 class SummaryList extends Component {
 
-    render() {
+    render() {    
 
         return (
+
             <tr>
-                <td><span className={"flag-icon-"+this.props.index.CountryCode.toLowerCase()+ " flagIcon"}>　</span></td>
+                <td><ModalWindow countryCode={this.props.index.CountryCode}/></td>
                 <td>{this.props.index.Country}</td>
                 <td>{this.props.index.NewConfirmed}</td>
                 <td>{this.props.index.TotalConfirmed}</td>
@@ -20,12 +22,6 @@ class SummaryList extends Component {
             </tr>
 
         );
-
-        // var countryCode = this.props.index.CountryCode.toLowerCase();
-        // var flagIcon = "flag-icon-" + countryCode;
-        // var element = document.getElementById("flagIcon");
-        // element.classList.add(flagIcon);
-        // console.log(element.classList);
 
     }
 
