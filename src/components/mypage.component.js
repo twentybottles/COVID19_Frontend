@@ -3,6 +3,8 @@ import {} from 'reactstrap';
 import { withFormik } from 'formik';
 import SummaryList from './summaryList.js';
 import DropDown from './dropDown.js';
+import { css } from "@emotion/core";
+import ClipLoader from "react-spinners/ClipLoader";
 
 class Mypage extends Component {
 
@@ -34,8 +36,22 @@ class Mypage extends Component {
 
     render() {
 
+    	if (this.state.countries.length == 0) {
+
+    		return (
+
+	            <div className="auth-inner-large">
+					<ClipLoader className="auth-inner-large" css={override} size={100} />
+				</div>
+
+    		);
+
+    	}
+
         return (
+
             <div className="auth-inner-large">
+
             	<div className="text-right">
             		<DropDown key="name" index={this.state.name} />
 				</div>
@@ -143,6 +159,12 @@ class Mypage extends Component {
 
 	}
 }
+
+const override = css`
+  display: block;
+  margin: 250px auto;
+  border-color: #1C8EF9;
+`;
 
 const MyEnhancedForm = withFormik({
     enableReinitialize: true,
