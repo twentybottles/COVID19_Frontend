@@ -10,20 +10,20 @@ class Mypage extends Component {
 
    constructor(props){
 
-	   super(props);
+    super(props);
 
-	   this.state = {
-		   date: '',
-		   name: '',
-		   country: '',
-		   newConfirmed: '',
-		   totalConfirmed: '',
-		   newDeaths: '',
-		   totalDeaths: '',
-		   newRecovered: '',
-		   totalRecovered: '',
-		   countries:[]
-	   }
+    this.state = {
+		date: '',
+		name: '',
+		country: '',
+		newConfirmed: '',
+		totalConfirmed: '',
+		newDeaths: '',
+		totalDeaths: '',
+		newRecovered: '',
+		totalRecovered: '',
+		countries:[]
+    }
   }
 
     componentDidMount() {
@@ -36,27 +36,24 @@ class Mypage extends Component {
 
     render() {
 
-    	if (this.state.countries.length == 0) {
+    	if (this.state.countries.length === 0) {
 
     		return (
-
 	            <div className="auth-inner-large">
 					<ClipLoader className="auth-inner-large" css={override} size={100} />
 				</div>
-
     		);
 
     	}
 
         return (
-
             <div className="auth-inner-large">
-
             	<div className="text-right">
             		<DropDown key="name" index={this.state.name} />
 				</div>
-	        	<h1 className="text-center">COVID19　Summary</h1>
-			　　<table className="table table-condensed table-striped table-responsive wrap-table">
+	        	<h1 className="text-center">COVID-19　Summary</h1>
+	        	<p className="text-right">{this.state.date}</p>
+				<table className="table table-condensed table-striped table-responsive wrap-table">
 					<thead>
 						<tr>
 						    <th colSpan="2" className="text-center">Country</th>
@@ -70,7 +67,7 @@ class Mypage extends Component {
 					</thead>
 					<tbody className="text-right">
 						<tr className="active text-danger">
-						    <td colSpan="2">{this.state.country + this.state.date}</td>
+						    <td colSpan="2">{this.state.country}</td>
 						    <td>{this.state.newConfirmed}</td>
 						    <td>{this.state.totalConfirmed}</td>
 						    <td>{this.state.newDeaths}</td>
@@ -78,16 +75,14 @@ class Mypage extends Component {
 						    <td>{this.state.newRecovered}</td>
 						    <td>{this.state.totalRecovered}</td>
 						</tr>
-
 						{this.state.countries.map((country, index) => {
   							return <SummaryList key={country.CountryCode} country={country} />;
-	 						})}							
-
+	 					})}
 					</tbody>
-			　　</table>
-            </div>
+				</table>
+			</div>
         );
-
+        
     }
 
     getIdFromUrl() {
@@ -151,7 +146,7 @@ class Mypage extends Component {
 				    totalDeaths: json.Global.TotalDeaths,
 				    newRecovered: json.Global.NewRecovered,
 				    totalRecovered: json.Global.TotalRecovered,
-					date: "（" + json.Date + "）",
+					date: json.Date,
 					countries: json.Countries
 				});
 	      	})

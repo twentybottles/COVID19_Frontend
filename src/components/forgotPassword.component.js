@@ -12,7 +12,7 @@ class ForgotPassword extends Component {
     
         return (
             <div className="auth-inner">
-                <h3>Forgot Password</h3>
+                <h1>Forgot Password</h1>
                 <Form className="text-left" onSubmit={handleSubmit}>
                     <FormGroup className="form-group">
                         <Label for="MyEmailAddress">Email</Label>

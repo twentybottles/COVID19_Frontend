@@ -12,7 +12,7 @@ class Login extends Component {
 
         return (
             <div className="auth-inner">
-                <h3>Sign In</h3>
+                <h1>Sign In</h1>
                 <Form className="text-left" onSubmit={handleSubmit}>
                     <FormGroup className="form-group">
                         <Label for="myUsername">Username</Label>

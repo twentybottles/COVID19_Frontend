@@ -9,7 +9,6 @@ class SummaryList extends Component {
     render() {    
 
         return (
-
             <tr>
                 <td>
                     <ModalWindow 
@@ -27,7 +26,6 @@ class SummaryList extends Component {
                 <td>{this.props.country.NewRecovered}</td>
                 <td>{this.props.country.TotalRecovered}</td>
             </tr>
-
         );
 
     }

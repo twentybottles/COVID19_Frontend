@@ -11,7 +11,7 @@ class SignUpConfirm extends Component {
 
         return (
             <div className="auth-inner">
-                <h3>SignUp Confirm</h3>
+                <h1>SignUp Confirm</h1>
                 <Form className="text-left" onSubmit={handleSubmit}>
                     <FormGroup className="form-group">
                         <Label for="firstname">First Name</Label>
