@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withFormik } from 'formik';
-import '../flag-icon-css-master/css/flag-icon.css';
-import ModalWindow from './modalWindow.js';
+import '../../flag-icon-css-master/css/flag-icon.css';
+import ModalWindow from './modalWindow';
 
 
 class SummaryList extends Component {

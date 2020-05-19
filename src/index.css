@@ -96,6 +96,7 @@ body, html, .App, #root, .auth-wrapper {
 
 .flagIcon {
   width:20px;
+  height:16px;
   display:inline-block;
 }
 

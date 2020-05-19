@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import {} from 'reactstrap';
 import { withFormik } from 'formik';
-import SummaryList from './summaryList.js';
-import DropDown from './dropDown.js';
+import SummaryList from '../util/summaryList';
 import { css } from "@emotion/core";
 import ClipLoader from "react-spinners/ClipLoader";
 
@@ -24,6 +23,7 @@ class Mypage extends Component {
 		totalRecovered: '',
 		countries:[]
     }
+
   }
 
     componentDidMount() {
@@ -48,9 +48,6 @@ class Mypage extends Component {
 
         return (
             <div className="auth-inner-large">
-            	<div className="text-right">
-            		<DropDown key="name" index={this.state.name} />
-				</div>
 	        	<h1 className="text-center">COVID-19　Summary</h1>
 	        	<p className="text-right">{this.state.date}</p>
 				<table className="table table-condensed table-striped table-responsive wrap-table">
@@ -118,9 +115,11 @@ class Mypage extends Component {
 	        })
 	        .then(response => response.json())
 	        .then((json) => {
+	        	var name = json.firstname + "\t" + json.lastname;
 				this.setState({
-					name: json.firstname + "\t" + json.lastname
+					name: name
 				});
+				this.props.loginMenu(name);
 	      	})
 	        .catch(error => console.error('Error:サーバーが混み合っています', error));
 

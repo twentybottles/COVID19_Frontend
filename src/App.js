@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ViewController from './ViewController';
+import ViewController from './viewController';
 
 class App extends Component {
 	

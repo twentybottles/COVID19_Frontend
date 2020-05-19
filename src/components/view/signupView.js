@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label } from 'reactstrap';
 import { withFormik, ErrorMessage, Field } from 'formik';
-import PasswordStrengthMeter from '../PasswordStrengthMeter';
+import PasswordStrengthMeter from '../util/passwordStrengthMeter';
 import * as Yup from 'yup';
 
 class SignUp extends Component {
