@@ -115,11 +115,7 @@ class Mypage extends Component {
 	        })
 	        .then(response => response.json())
 	        .then((json) => {
-	        	var name = json.firstname + "\t" + json.lastname;
-				this.setState({
-					name: name
-				});
-				this.props.loginMenu(name);
+				this.props.setLoginMenu(json.firstname + "\t" + json.lastname);
 	      	})
 	        .catch(error => console.error('Error:サーバーが混み合っています', error));
 
