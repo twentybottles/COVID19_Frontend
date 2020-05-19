@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withFormik } from 'formik';
 import '../../flag-icon-css-master/css/flag-icon.css';
-import ModalWindow from './modalWindow';
+import ModalChart from './modalChart';
 
 
 class SummaryList extends Component {
@@ -11,7 +11,7 @@ class SummaryList extends Component {
         return (
             <tr>
                 <td>
-                    <ModalWindow 
+                    <ModalChart 
                         countryName={this.props.country.Country} 
                         countryCode={this.props.country.CountryCode}
                         countrySlug={this.props.country.CountrySlug}

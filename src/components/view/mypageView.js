@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {} from 'reactstrap';
 import { withFormik } from 'formik';
 import SummaryList from '../util/summaryList';
 import { css } from "@emotion/core";
@@ -9,22 +8,22 @@ class Mypage extends Component {
 
    constructor(props){
 
-    super(props);
+	    super(props);
 
-    this.state = {
-		date: '',
-		name: '',
-		country: '',
-		newConfirmed: '',
-		totalConfirmed: '',
-		newDeaths: '',
-		totalDeaths: '',
-		newRecovered: '',
-		totalRecovered: '',
-		countries:[]
-    }
+	    this.state = {
+			date: '',
+			name: '',
+			country: '',
+			newConfirmed: '',
+			totalConfirmed: '',
+			newDeaths: '',
+			totalDeaths: '',
+			newRecovered: '',
+			totalRecovered: '',
+			countries:[]
+	    }
 
-  }
+	}
 
     componentDidMount() {
 

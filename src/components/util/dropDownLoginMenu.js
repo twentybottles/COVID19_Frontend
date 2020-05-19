@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
+import { Modal } from 'reactstrap';
 import { withFormik } from 'formik';
 import { Dropdown } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
-import { Link } from 'react-router-dom'
+import ModalDownload from './modalDownload';
+import ModalSelectCountry from './modalSelectCountry';
 
-class DropDown extends Component {
+class DropDownLoginMenu extends Component {
 
     constructor(props){
 
@@ -13,10 +16,6 @@ class DropDown extends Component {
     }
 
     profile() {
-
-    }
-
-    download() {
 
     }
 
@@ -36,14 +35,18 @@ class DropDown extends Component {
             <Dropdown text={this.props.name} >
                 <Dropdown.Menu>
                     <Dropdown.Item>
-                        <Link to="/" style={{color:'black'}}>
+                        <Link to={'/profile?id='+ this.getIdFromUrl()} style={{color:'black'}}>
                             <span className="text">Profile</span>
                         </Link>
                     </Dropdown.Item>
                     <Dropdown.Divider />
-                    <Dropdown.Item text='Select Country' onClick={() => {this.selectCountry()}} />
+                    <Dropdown.Item>
+                        <ModalSelectCountry />
+                    </Dropdown.Item>
                     <Dropdown.Divider />
-                    <Dropdown.Item text='Download' onClick={() => {this.download()}} />
+                    <Dropdown.Item>
+                        <ModalDownload />
+                    </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item>
                         <Link to="/" style={{color:'black'}}>
@@ -56,9 +59,30 @@ class DropDown extends Component {
 
     }
 
+    getIdFromUrl() {
+
+        let urlParamStr = window.location.search;
+        let params = {}
+
+        if (urlParamStr) {
+
+            urlParamStr = urlParamStr.substring(1)
+            urlParamStr.split('&').forEach( param => {
+                const temp = param.split('=')
+                params = {
+                    ...params,
+                    [temp[0]]: temp[1]
+                }
+            })
+        }
+
+        return params.id;
+
+    }
+
 }
 
 const MyEnhancedForm = withFormik({
-})(DropDown);
+})(DropDownLoginMenu);
 
 export default MyEnhancedForm;
