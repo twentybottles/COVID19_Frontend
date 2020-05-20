@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { withFormik } from 'formik';
 import { Form, Button, Modal, ModalBody, ModalHeader, ModalFooter } from 'reactstrap';
 
-const ModalSelectCountry = (props) => {
+const SelectCountryModal = (props) => {
   const {
     handleSubmit,
   } = props;
@@ -71,6 +71,6 @@ const MyEnhancedForm = withFormik({
 
 
     },
-})(ModalSelectCountry);
+})(SelectCountryModal);
 
 export default MyEnhancedForm;

@@ -4,7 +4,7 @@ import { Button, Form, FormGroup, Label } from 'reactstrap';
 import { withFormik, ErrorMessage, Field } from 'formik';
 import * as Yup from 'yup';
 
-class Login extends Component {
+class LoginView extends Component {
 
     render() {
 
@@ -85,6 +85,6 @@ const MyEnhancedForm = withFormik({
 
 
     },
-})(Login);
+})(LoginView);
 
 export default MyEnhancedForm;

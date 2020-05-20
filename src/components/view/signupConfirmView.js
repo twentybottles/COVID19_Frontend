@@ -3,7 +3,7 @@ import { Button, Form, FormGroup, Label } from 'reactstrap';
 import { withFormik } from 'formik';
 //import Cookie from 'js-cookie'
 
-class SignUpConfirm extends Component {
+class SignUpConfirmView extends Component {
 
     render() {
 
@@ -71,6 +71,6 @@ const MyEnhancedForm = withFormik({
         .catch(error => console.error('Error:', error));
 
     },
-})(SignUpConfirm);
+})(SignUpConfirmView);
 
 export default MyEnhancedForm;

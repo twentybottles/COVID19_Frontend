@@ -4,10 +4,11 @@ import { Modal } from 'reactstrap';
 import { withFormik } from 'formik';
 import { Dropdown } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
-import ModalDownload from './modalDownload';
-import ModalSelectCountry from './modalSelectCountry';
+import ProfileModal from './profileModal';
+import SelectCountryModal from './selectCountryModal';
+import DownloadModal from './downloadModal';
 
-class DropDownLoginMenu extends Component {
+class LoginMenuDropDown extends Component {
 
     constructor(props){
 
@@ -35,17 +36,15 @@ class DropDownLoginMenu extends Component {
             <Dropdown text={this.props.name} >
                 <Dropdown.Menu>
                     <Dropdown.Item>
-                        <Link to={'/profile?id='+ this.getIdFromUrl()} style={{color:'black'}}>
-                            <span className="text">Profile</span>
-                        </Link>
+                        <ProfileModal />
                     </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item>
-                        <ModalSelectCountry />
+                        <SelectCountryModal />
                     </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item>
-                        <ModalDownload />
+                        <DownloadModal />
                     </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item>
@@ -83,6 +82,6 @@ class DropDownLoginMenu extends Component {
 }
 
 const MyEnhancedForm = withFormik({
-})(DropDownLoginMenu);
+})(LoginMenuDropDown);
 
 export default MyEnhancedForm;

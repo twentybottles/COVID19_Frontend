@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { withFormik } from 'formik';
 import { Form, Button, Modal, ModalHeader, ModalFooter } from 'reactstrap';
 
-const ModalDownload = (props) => {
+const ProfileModal = (props) => {
   const {
     handleSubmit,
   } = props;
@@ -19,7 +19,7 @@ const ModalDownload = (props) => {
     <div>
       <Form className="text-left" onSubmit={handleSubmit}>
 
-      <span onClick={toggle} className="">Download</span>
+      <span onClick={toggle} className="">Profile</span>
       <Modal isOpen={modal} toggle={toggle} className="modal-lg">
         <ModalHeader toggle={toggle}>表示しているデータを一括ダウンロードしますか？：</ModalHeader>
         <ModalFooter>
@@ -68,6 +68,6 @@ const MyEnhancedForm = withFormik({
 
 
     },
-})(ModalDownload);
+})(ProfileModal);
 
 export default MyEnhancedForm;

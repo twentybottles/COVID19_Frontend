@@ -3,7 +3,7 @@ import { withFormik } from 'formik';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { LineChart, ComposedChart, XAxis, YAxis, Tooltip, Legend, CartesianGrid, Area, Bar, Line } from 'recharts'
 
-const ModalChart = (props) => {
+const ChartModal = (props) => {
   const {
     countryCode,
     countryName,
@@ -63,6 +63,6 @@ const data = [
 
 
 const MyEnhancedForm = withFormik({
-})(ModalChart);
+})(ChartModal);
 
 export default MyEnhancedForm;

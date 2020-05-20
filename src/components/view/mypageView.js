@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { withFormik } from 'formik';
-import SummaryList from '../util/summaryList';
 import { css } from "@emotion/core";
+import SummaryList from '../util/summaryList';
 import ClipLoader from "react-spinners/ClipLoader";
 
-class Mypage extends Component {
+class MypageView extends Component {
 
    constructor(props){
 
@@ -162,6 +162,6 @@ const MyEnhancedForm = withFormik({
         setSubmitting(false);
 
     },
-})(Mypage);
+})(MypageView);
 
 export default MyEnhancedForm;
