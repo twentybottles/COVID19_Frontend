@@ -4,7 +4,6 @@ import { withFormik } from 'formik';
 import { Dropdown } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
 import ProfileModal from './profileModal';
-import SelectCountryModal from './selectCountryModal';
 import DownloadModal from './downloadModal';
 
 class LoginMenuDropDown extends Component {
@@ -16,10 +15,6 @@ class LoginMenuDropDown extends Component {
                 <Dropdown.Menu>
                     <Dropdown.Item>
                         <ProfileModal />
-                    </Dropdown.Item>
-                    <Dropdown.Divider />
-                    <Dropdown.Item>
-                        <SelectCountryModal />
                     </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item>
