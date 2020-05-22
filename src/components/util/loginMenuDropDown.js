@@ -13,7 +13,7 @@ class LoginMenuDropDown extends Component {
         return (
             <Dropdown text={this.props.name} >
                 <Dropdown.Menu>
-                    <Dropdown.Item>
+                    <Dropdown.Item className="dropdown">
                         <ProfileModal />
                     </Dropdown.Item>
                     <Dropdown.Divider />

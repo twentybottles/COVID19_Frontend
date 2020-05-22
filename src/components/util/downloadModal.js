@@ -1,73 +1,79 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withFormik } from 'formik';
 import { Form, Button, Modal, ModalHeader, ModalFooter } from 'reactstrap';
+import CsvCreator from 'react-csv-creator';
 
 const DownloadModal = (props) => {
-  const {
-    handleSubmit,
-  } = props;
+
+  const [res, setRes] = useState({init:false});
 
   const [modal, setModal] = useState(false);
 
   const toggle = () => {
-
-   setModal(!modal);
-    
+    setRes({init:false});
+    setModal(!modal);
   }
+
+  const rows = [];
+  
+  const headers = [
+    {id:'CountryCode', display:'Code'}, 
+    {id:'Country', display:'Name'},
+    {id:'Slug', display:'Slug'},
+    {id:'NewConfirmed', display:'NewConfirmed'},
+    {id:'TotalConfirmed', display:'TotalConfirmed'},
+    {id:'NewDeaths', display:'NewDeaths'},
+    {id:'TotalDeaths', display:'TotalDeaths'},
+    {id:'NewRecovered', display:'NewRecovered'},
+    {id:'TotalRecovered', display:'TotalRecovered'},
+    {id:'Date', display:'Date'}
+  ];
+
+
+  useEffect(() => {
+
+    if (res.init) {return;}
+
+    fetch('http://localhost:8080/covidSearchSummary', {
+            method: 'GET',
+            mode: 'cors',
+            cache: "force-cache",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            },
+        })
+        .then(response => response.json())
+        .then((json) => {
+
+          json.Countries.map((country) => {rows.push(country);})
+
+          setRes ({
+            date: json.Date,
+            init: true
+          });
+        })
+        .catch(error => console.error('Error:サーバーが混み合っています', error)
+    );
+
+  });
 
   return (
     <div>
-      <Form className="text-left" onSubmit={handleSubmit}>
-
       <span onClick={toggle} className="">Download</span>
       <Modal isOpen={modal} toggle={toggle} className="modal-lg">
-        <ModalHeader toggle={toggle}>表示しているデータを一括ダウンロードしますか？：</ModalHeader>
+        <ModalHeader toggle={toggle}>Would you downloaded all of the data？：</ModalHeader>
         <ModalFooter>
-          <Button color="primary" onClick={toggle}>Yes</Button>
+          <Button color="primary" onClick={toggle}>
+            <CsvCreator filename="covid19_summary" headers={headers} rows={rows} text="Yes" /> 
+          </Button>
           <Button color="secondary" onClick={toggle}>Close</Button>
         </ModalFooter>
       </Modal>
-      </Form>
     </div>
   );
 }
 
 
-const MyEnhancedForm = withFormik({
-    handleSubmit: (values, { setErrors, props, setSubmitting }) => {
-
-        // setSubmitting(false);
-
-        // fetch('http://localhost:8080/loginAuthentication', {
-        //     method: 'POST',
-        //     mode: 'cors',
-        //     // cache: "no-cache",
-        //     // credentials: "same-origin",
-        //     // headers: {
-        //     //     "Content-Type": "application/json; charset=utf-8",
-        //     //     'X-XSRF-TOKEN': Cookie.get('XSRF-TOKEN')
-        //     // },
-        //     headers: {
-        //         "Content-Type": "application/json; charset=utf-8"
-        //     },
-        //     body : JSON.stringify({ 
-        //         myUsername: values.myUsername,
-        //         myPassword: values.myPassword
-        //      }),
-
-        // })
-        // .then(response => response.json())
-        // .then(function(response) {
-        //     if (response.length > 0) {
-        //         props.history.push('/mypage?id='+response[0].id);
-        //     }
-        //     return setErrors({ authentication : 'Either Username or Password is invalid' });
-        // })
-        // .catch(error => console.error('Error:', error));
-        alert("aaa");
-
-
-    },
-})(DownloadModal);
+const MyEnhancedForm = withFormik({})(DownloadModal);
 
 export default MyEnhancedForm;
