@@ -7,6 +7,7 @@
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.4.1",
+    "discord-react-forms": "^2.1.5",
     "formik": "^2.1.4",
     "isemail": "^3.2.0",
     "js-cookie": "^2.2.1",

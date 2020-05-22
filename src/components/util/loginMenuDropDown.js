@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import { Modal } from 'reactstrap';
 import { withFormik } from 'formik';
 import { Dropdown } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
@@ -9,26 +8,6 @@ import SelectCountryModal from './selectCountryModal';
 import DownloadModal from './downloadModal';
 
 class LoginMenuDropDown extends Component {
-
-    constructor(props){
-
-        super(props);
-
-    }
-
-    profile() {
-
-    }
-
-    selectCountry() {
-
-    }
-
-    signout() {
-
-        this.props.setLogoutMenu();
-
-    }
 
     render() {
 
@@ -49,7 +28,7 @@ class LoginMenuDropDown extends Component {
                     <Dropdown.Divider />
                     <Dropdown.Item>
                         <Link to="/" style={{color:'black'}}>
-                            <span className="text" onClick={() => {this.signout()}}>Sign out</span>
+                            <span className="text" onClick={() => {this.props.setLogoutMenu()}}>Sign out</span>
                         </Link>
                     </Dropdown.Item>
                 </Dropdown.Menu>
