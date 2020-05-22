@@ -132,3 +132,19 @@ thead tr th {
   font-size: 16px;
 
 }
+
+.dropdown {
+
+  width:150px;
+
+}
+
+.dropdownFont {
+
+  color:black;
+
+}
+
+.dropdownFont:hover {
+  color: none!important;
+}

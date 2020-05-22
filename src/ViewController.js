@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
 
-import Login from "./components/view/loginView";
-import Mypage from "./components/view/mypageView";
-import SignUp from "./components/view/signupView";
-import SignUpConfirm from "./components/view/signupConfirmView";
-import SignUpComplete from "./components/view/signupCompleteView";
-import ForgotPassword from "./components/view/forgotPasswordView";
-import ForgotPasswordComplete from "./components/view/forgotPasswordCompleteView";
-import DropDown from './components/util/dropDown';
+import LoginView from "./components/view/loginView";
+import MypageView from "./components/view/mypageView";
+import SignUpView from "./components/view/signupView";
+import SignUpConfirmView from "./components/view/signupConfirmView";
+import SignUpCompleteView from "./components/view/signupCompleteView";
+import ForgotPasswordView from "./components/view/forgotPasswordView";
+import ForgotPasswordCompleteView from "./components/view/forgotPasswordCompleteView";
+import LoginMenuDropDown from './components/util/loginMenuDropDown';
 
 class ViewController extends Component {
 
@@ -17,16 +17,24 @@ class ViewController extends Component {
     super(props);
 
     this.state = {
-      isLogin: false,
-      name: ''
+      name: '',
+      isLogin: false
     }
 
   }
 
-  isLoginMenu(name) {
+  setLoginMenu(name) {
+
     this.setState({ 
-      name: name,
-      isLogin: true });
+    name: name,
+    isLogin: true });
+
+  }
+
+  setLogoutMenu() {
+
+      this.setState({ isLogin: false });
+
   }
 
   render() {
@@ -35,7 +43,7 @@ class ViewController extends Component {
     if (this.state.isLogin) {
       navbar = (
                 <div className="text-right mr-5">
-                  <DropDown key="name" index={this.state.name} />
+                  <LoginMenuDropDown key="name" name={this.state.name} setLogoutMenu={() => { this.setLogoutMenu(); }} />
                 </div>
               );
     } else {
@@ -65,15 +73,15 @@ class ViewController extends Component {
 
         <div className="auth-wrapper">
           <Switch>
-            <Route exact path='/' component={Login} />
-            <Route exact path="/mypage">
-              <Mypage loginMenu={(name) => { this.isLoginMenu(name); }} />
+            <Route exact path='/' component={LoginView} />
+            <Route path="/mypage">
+              <MypageView setLoginMenu={(name) => { this.setLoginMenu(name); }} />
             </Route>
-            <Route path="/signup" component={SignUp} />
-            <Route path="/signup-confirm" component={SignUpConfirm} />
-            <Route path="/signup-complete" component={SignUpComplete} />
-            <Route path="/forgot-password" component={ForgotPassword} />
-            <Route path="/forgot-password-complete" component={ForgotPasswordComplete} />
+            <Route path="/signup" component={SignUpView} />
+            <Route path="/signup-confirm" component={SignUpConfirmView} />
+            <Route path="/signup-complete" component={SignUpCompleteView} />
+            <Route path="/forgot-password" component={ForgotPasswordView} />
+            <Route path="/forgot-password-complete" component={ForgotPasswordCompleteView} />
           </Switch>
         </div>
       </div>

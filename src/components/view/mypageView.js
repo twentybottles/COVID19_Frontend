@@ -1,30 +1,29 @@
 import React, { Component } from 'react';
-import {} from 'reactstrap';
 import { withFormik } from 'formik';
-import SummaryList from '../util/summaryList';
 import { css } from "@emotion/core";
+import SummaryList from '../util/summaryList';
 import ClipLoader from "react-spinners/ClipLoader";
 
-class Mypage extends Component {
+class MypageView extends Component {
 
    constructor(props){
 
-    super(props);
+	    super(props);
 
-    this.state = {
-		date: '',
-		name: '',
-		country: '',
-		newConfirmed: '',
-		totalConfirmed: '',
-		newDeaths: '',
-		totalDeaths: '',
-		newRecovered: '',
-		totalRecovered: '',
-		countries:[]
-    }
+	    this.state = {
+			date: '',
+			name: '',
+			country: '',
+			newConfirmed: '',
+			totalConfirmed: '',
+			newDeaths: '',
+			totalDeaths: '',
+			newRecovered: '',
+			totalRecovered: '',
+			countries:[]
+	    }
 
-  }
+	}
 
     componentDidMount() {
 
@@ -115,11 +114,7 @@ class Mypage extends Component {
 	        })
 	        .then(response => response.json())
 	        .then((json) => {
-	        	var name = json.firstname + "\t" + json.lastname;
-				this.setState({
-					name: name
-				});
-				this.props.loginMenu(name);
+				this.props.setLoginMenu(json.firstname + "\t" + json.lastname);
 	      	})
 	        .catch(error => console.error('Error:サーバーが混み合っています', error));
 
@@ -167,6 +162,6 @@ const MyEnhancedForm = withFormik({
         setSubmitting(false);
 
     },
-})(Mypage);
+})(MypageView);
 
 export default MyEnhancedForm;

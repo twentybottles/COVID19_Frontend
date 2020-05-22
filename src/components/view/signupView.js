@@ -4,7 +4,7 @@ import { withFormik, ErrorMessage, Field } from 'formik';
 import PasswordStrengthMeter from '../util/passwordStrengthMeter';
 import * as Yup from 'yup';
 
-class SignUp extends Component {
+class SignUpView extends Component {
 
     render() {
 
@@ -98,6 +98,6 @@ const MyEnhancedForm = withFormik({
         .catch(error => console.error('Error:', error));
         
     },
-})(SignUp);
+})(SignUpView);
 
 export default MyEnhancedForm;

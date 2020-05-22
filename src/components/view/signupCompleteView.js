@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Form } from 'reactstrap';
 import { withFormik } from 'formik';
 
-class SignUpComplete extends Component {
+class SignUpCompleteView extends Component {
 
     render() {
 
@@ -25,6 +25,6 @@ const MyEnhancedForm = withFormik({
     handleSubmit: props => {
         props.history.push({pathname: '/'})
     },
-})(SignUpComplete);
+})(SignUpCompleteView);
 
 export default MyEnhancedForm;

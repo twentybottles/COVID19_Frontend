@@ -4,7 +4,7 @@ import { Button, Form, FormGroup, Label } from 'reactstrap';
 import { withFormik, ErrorMessage, Field } from 'formik';
 import * as Yup from 'yup';
 
-class ForgotPassword extends Component {
+class ForgotPasswordView extends Component {
     
     render() {
 
@@ -55,6 +55,6 @@ const MyEnhancedForm = withFormik({
             pathname: '/forgot-password-complete'
         })
     },
-})(ForgotPassword);
+})(ForgotPasswordView);
 
 export default MyEnhancedForm;
