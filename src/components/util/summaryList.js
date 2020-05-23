@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withFormik } from 'formik';
-import '../../flag-icon-css-master/css/flag-icon.css';
 import ChartModal from './chartModal';
+import '../../flag-icon-css-master/css/flag-icon.css';
 
 
 class SummaryList extends Component {
@@ -32,7 +32,6 @@ class SummaryList extends Component {
 
 }
 
-const MyEnhancedForm = withFormik({
-})(SummaryList);
+const MyEnhancedForm = withFormik({})(SummaryList);
 
 export default MyEnhancedForm;

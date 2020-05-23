@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { withFormik } from 'formik';
 import { css } from "@emotion/core";
 import SummaryList from '../util/summaryList';
+import searchIdFromUrl from '../util/function/searchIdFromUrl';
 import ClipLoader from "react-spinners/ClipLoader";
+
 
 class MypageView extends Component {
 
@@ -27,7 +29,7 @@ class MypageView extends Component {
 
     componentDidMount() {
 
-    	this.searchMemberInfomation(this.getIdFromUrl());
+    	this.searchMemberInfomation();
 
         this.searchCovidSummary();
 
@@ -81,30 +83,9 @@ class MypageView extends Component {
         
     }
 
-    getIdFromUrl() {
+    searchMemberInfomation() {
 
-		let urlParamStr = window.location.search;
-		let params = {}
-
-		if (urlParamStr) {
-
-			urlParamStr = urlParamStr.substring(1)
-			urlParamStr.split('&').forEach( param => {
-				const temp = param.split('=')
-				params = {
-					...params,
-					[temp[0]]: temp[1]
-				}
-			})
-		}
-
-		return params.id;
-
-    }
-
-    searchMemberInfomation(id) {
-
-	    fetch('http://localhost:8080/loginSearchName?id=' + id, {
+	    fetch('http://localhost:8080/loginSearchName?id=' + searchIdFromUrl(), {
 	            method: 'GET',
 	            mode: 'cors',
 	            cache: "no-cache",
@@ -148,20 +129,8 @@ class MypageView extends Component {
 
 	}
 }
+const override = css`display: block; margin: 250px auto; border-color: #1C8EF9;`;
 
-const override = css`
-  display: block;
-  margin: 250px auto;
-  border-color: #1C8EF9;
-`;
-
-const MyEnhancedForm = withFormik({
-    enableReinitialize: true,
-    handleSubmit: (values, { setErrors, props, setSubmitting }) => {
-
-        setSubmitting(false);
-
-    },
-})(MypageView);
+const MyEnhancedForm = withFormik({})(MypageView);
 
 export default MyEnhancedForm;

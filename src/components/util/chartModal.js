@@ -62,7 +62,6 @@ const data = [
 }
 
 
-const MyEnhancedForm = withFormik({
-})(ChartModal);
+const MyEnhancedForm = withFormik({})(ChartModal);
 
 export default MyEnhancedForm;

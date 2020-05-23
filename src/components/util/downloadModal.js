@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { withFormik } from 'formik';
-import { Form, Button, Modal, ModalHeader, ModalFooter } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalFooter } from 'reactstrap';
 import CsvCreator from 'react-csv-creator';
 
 const DownloadModal = (props) => {
@@ -9,10 +9,7 @@ const DownloadModal = (props) => {
 
   const [modal, setModal] = useState(false);
 
-  const toggle = () => {
-    setRes({init:false});
-    setModal(!modal);
-  }
+  const toggle = () => {setRes({init:false});setModal(!modal);}
 
   const rows = [];
   
@@ -28,7 +25,6 @@ const DownloadModal = (props) => {
     {id:'TotalRecovered', display:'TotalRecovered'},
     {id:'Date', display:'Date'}
   ];
-
 
   useEffect(() => {
 
@@ -59,9 +55,9 @@ const DownloadModal = (props) => {
 
   return (
     <div>
-      <span onClick={toggle} className="">Download</span>
+      <span onClick={toggle}>Download</span>
       <Modal isOpen={modal} toggle={toggle} className="modal-lg">
-        <ModalHeader toggle={toggle}>Would you downloaded all of the data？：</ModalHeader>
+        <ModalHeader toggle={toggle}>Would you downloaded all of the data？</ModalHeader>
         <ModalFooter>
           <Button color="primary" onClick={toggle}>
             <CsvCreator filename="covid19_summary" headers={headers} rows={rows} text="Yes" /> 

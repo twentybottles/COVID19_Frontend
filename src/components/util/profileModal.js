@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { withFormik, ErrorMessage, Field } from 'formik';
-import PasswordStrengthMeter from '../util/passwordStrengthMeter';
-import * as Yup from 'yup';
 import { Form, Button, FormGroup, Label, Modal, ModalBody, ModalHeader, ModalFooter } from 'reactstrap';
+import * as Yup from 'yup';
+import PasswordStrengthMeter from '../util/passwordStrengthMeter';
+import searchIdFromUrl from './function/searchIdFromUrl';
+
 
 const ProfileModal = (props) => {
 
@@ -25,11 +27,34 @@ const ProfileModal = (props) => {
 
   function handleInputChange(e) {
 
-    const target = e.target;
-    const targetName = target.name;
-    setItem({[targetName]: e.target.value});
-    props.values[targetName] = target.value;
+    setItem({[e.target.name]: e.target.value});
+    props.values[e.target.name] = e.target.value;
     props.values.edited = true;
+
+  }
+
+  function searchMemberInfomation() {
+
+    fetch('http://localhost:8080/loginSearchName?id=' + searchIdFromUrl(), {
+      method: 'GET',
+      mode: 'cors',
+      cache: "no-cache",
+      headers: {
+          "Content-Type": "application/json; charset=utf-8"
+      }
+    })
+    .then(response => response.json())
+    .then((json) => {
+        setItem({
+          id: json.id,
+          firstname: json.firstname,
+          lastname: json.lastname,
+          emailAddress: json.myUsername,
+          password: json.myPassword,
+          init: true
+        });
+    })
+    .catch(error => console.error('Error:サーバーが混み合っています', error));
 
   }
 
@@ -42,26 +67,7 @@ const ProfileModal = (props) => {
       return;
     }
 
-    fetch('http://localhost:8080/loginSearchName?id=' + getIdFromUrl(), {
-      method: 'GET',
-      mode: 'cors',
-      cache: "no-cache",
-      headers: {
-          "Content-Type": "application/json; charset=utf-8"
-      }
-    })
-    .then(response => response.json())
-    .then((json) => {
-        setItem({
-          id: json.id,
-    			firstname: json.firstname,
-    			lastname: json.lastname,
-    			emailAddress: json.myUsername,
-    			password: json.myPassword,
-          init: true
-        });
-    })
-    .catch(error => console.error('Error:サーバーが混み合っています', error));
+    searchMemberInfomation();
 
   });
 
@@ -121,79 +127,58 @@ const ProfileModal = (props) => {
 
 }
 
-const getIdFromUrl = () => {
-
-  let urlParamStr = window.location.search;
-  let params = {}
-
-  if (urlParamStr) {
-
-    urlParamStr = urlParamStr.substring(1)
-    urlParamStr.split('&').forEach( param => {
-      const temp = param.split('=')
-      params = {
-        ...params,
-        [temp[0]]: temp[1]
-      }
-    })
-  }
-
-  return params.id;
-
-}
-
 const MyEnhancedForm = withFormik({
   mapPropsToValues: props => ({edited: false, newPassword: '', confirmPassword: ''}),
-    validationSchema: Yup.object().shape({
-        firstname: Yup.string().min(1, 'firstname is too short')
-                               .max(10, 'firstname is too long'),
-        lastname: Yup.string().min(1, 'lastname is too short')
-                              .max(10, 'lastname is too long'),
-        emailAddress: Yup.string().min(10, 'emailAddress is too short')
-                                  .max(30, 'emailAddress is too long'),
-        password: Yup.string().min(8, 'password is too short'),                                
-        newPassword: Yup.string().min(8, 'newPassword is too short')
-                                 .test('not unique','NewPassword is already used', function(value) {
-                                  return this.parent.password !== value;
-                                }),
-        confirmPassword: Yup.string().oneOf([Yup.ref('newPassword'), null], 'NewPassword must match')
-    }),
+  validationSchema: Yup.object().shape({
+      firstname: Yup.string().min(1, 'firstname is too short')
+                             .max(10, 'firstname is too long'),
+      lastname: Yup.string().min(1, 'lastname is too short')
+                            .max(10, 'lastname is too long'),
+      emailAddress: Yup.string().min(10, 'emailAddress is too short')
+                                .max(30, 'emailAddress is too long'),
+      password: Yup.string().min(8, 'password is too short'),                                
+      newPassword: Yup.string().min(8, 'newPassword is too short')
+                               .test('not unique','NewPassword is already used', function(value) {
+                                return this.parent.password !== value;
+                              }),
+      confirmPassword: Yup.string().oneOf([Yup.ref('newPassword'), null], 'NewPassword must match')
+  }),
 
-    handleSubmit: (values, { setErrors, props, setSubmitting }) => {
+  handleSubmit: (values, { setErrors, props, setSubmitting }) => {
 
-        setSubmitting(false);
+      setSubmitting(false);
 
-        fetch('http://localhost:8080/signupRegister', {
-            method: 'POST',
-            mode: 'cors',
-            // cache: "no-cache",
-            // credentials: "same-origin",
-            // headers: {
-            //     "Content-Type": "application/json; charset=utf-8",
-            //     'X-XSRF-TOKEN': Cookie.get('XSRF-TOKEN')
-            // },
-            headers: {
-                "Content-Type": "application/json; charset=utf-8"
-            },
-            body : JSON.stringify({
-                id : values.id,
-                firstname: values.firstname === undefined ? values.oldItem.firstname : values.firstname,
-                lastname: values.lastname === undefined ? values.oldItem.lastname : values.lastname,
-                emailAddress: values.emailAddress === undefined ? values.oldItem.emailAddress : values.emailAddress,
-                password: values.newPassword === "" ? values.password : values.newPassword
-             }),
+      fetch('http://localhost:8080/signupRegister', {
+          method: 'POST',
+          mode: 'cors',
+          // cache: "no-cache",
+          // credentials: "same-origin",
+          // headers: {
+          //     "Content-Type": "application/json; charset=utf-8",
+          //     'X-XSRF-TOKEN': Cookie.get('XSRF-TOKEN')
+          // },
+          headers: {
+              "Content-Type": "application/json; charset=utf-8"
+          },
+          body : JSON.stringify({
+              id : values.id,
+              firstname: values.firstname === undefined ? values.oldItem.firstname : values.firstname,
+              lastname: values.lastname === undefined ? values.oldItem.lastname : values.lastname,
+              emailAddress: values.emailAddress === undefined ? values.oldItem.emailAddress : values.emailAddress,
+              password: values.newPassword === "" ? values.password : values.newPassword
+           }),
 
-        })
-        .then(response => response.json())
-        .then(function(result) {
-            if (result) {
-                alert("Your Profile was updated");
-                window.location.reload();
-            }
-        })
-        .catch(error => console.error('Error:', error));
+      })
+      .then(response => response.json())
+      .then(function(result) {
+          if (result) {
+              alert("Your Profile was updated");
+              window.location.reload();
+          }
+      })
+      .catch(error => console.error('Error:', error));
 
-    },
+  },
 })(ProfileModal);
 
 export default MyEnhancedForm;
