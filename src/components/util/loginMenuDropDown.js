@@ -11,14 +11,14 @@ class LoginMenuDropDown extends Component {
     render() {
 
         return (
-            <Dropdown text={this.props.name} >
+            <Dropdown text={this.props.member.firstname + "\t" + this.props.member.lastname} >
                 <Dropdown.Menu>
                     <Dropdown.Item className="dropdown">
-                        <ProfileModal />
+                        <ProfileModal member={this.props.member} />
                     </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item>
-                        <DownloadModal />
+                        <DownloadModal countries={this.props.countries} />
                     </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item>

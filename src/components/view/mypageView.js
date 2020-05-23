@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
 import { withFormik } from 'formik';
 import { css } from "@emotion/core";
 import SummaryList from '../util/summaryList';
@@ -29,8 +29,6 @@ class MypageView extends Component {
 
     componentDidMount() {
 
-    	this.searchMemberInfomation();
-
         this.searchCovidSummary();
 
     }
@@ -47,10 +45,12 @@ class MypageView extends Component {
 
     	}
 
+    	this.searchMemberInfomation(this.state.countries);
+
         return (
             <div className="auth-inner-large">
 	        	<h1 className="text-center">COVID-19　Summary</h1>
-	        	<p className="text-right">{this.state.date}</p>
+	        	<p className="text-right">Updated Date：{this.state.date}</p>
 				<table className="table table-condensed table-striped table-responsive wrap-table">
 					<thead>
 						<tr>
@@ -83,7 +83,7 @@ class MypageView extends Component {
         
     }
 
-    searchMemberInfomation() {
+    searchMemberInfomation(countries) {
 
 	    fetch('http://localhost:8080/loginSearchName?id=' + searchIdFromUrl(), {
 	            method: 'GET',
@@ -95,7 +95,7 @@ class MypageView extends Component {
 	        })
 	        .then(response => response.json())
 	        .then((json) => {
-				this.props.setLoginMenu(json.firstname + "\t" + json.lastname);
+				this.props.setLoginMenu(json, countries);
 	      	})
 	        .catch(error => console.error('Error:サーバーが混み合っています', error));
 

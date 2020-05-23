@@ -17,16 +17,18 @@ class ViewController extends Component {
     super(props);
 
     this.state = {
-      name: '',
+      member: {},
+      countries: {},      
       isLogin: false
     }
 
   }
 
-  setLoginMenu(name) {
+  setLoginMenu(member, countries) {
 
     this.setState({ 
-    name: name,
+    member: member,
+    countries: countries,
     isLogin: true });
 
   }
@@ -43,7 +45,7 @@ class ViewController extends Component {
     if (this.state.isLogin) {
       navbar = (
                 <div className="text-right mr-5">
-                  <LoginMenuDropDown key="name" name={this.state.name} setLogoutMenu={() => { this.setLogoutMenu(); }} />
+                  <LoginMenuDropDown member={this.state.member} countries={this.state.countries} setLogoutMenu={() => { this.setLogoutMenu(); }} />
                 </div>
               );
     } else {
@@ -75,7 +77,7 @@ class ViewController extends Component {
           <Switch>
             <Route exact path='/' component={LoginView} />
             <Route path="/mypage">
-              <MypageView setLoginMenu={(name) => { this.setLoginMenu(name); }} />
+              <MypageView setLoginMenu={(member, countries) => { this.setLoginMenu(member, countries); }} />
             </Route>
             <Route path="/signup" component={SignUpView} />
             <Route path="/signup-confirm" component={SignUpConfirmView} />

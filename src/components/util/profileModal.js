@@ -8,68 +8,19 @@ import searchIdFromUrl from './function/searchIdFromUrl';
 
 const ProfileModal = (props) => {
 
-  const {errors, values, touched, isSubmitting, handleSubmit} = props;
+  const {errors, values, dirty, touched, isSubmitting, handleSubmit} = props;
 
   const ErrorInnerMessage = ({ name }) => (<ErrorMessage name={name} component={({ children }) => (<span className="errorMsg">{children}</span>)} />);
 
-  const toggle = () => {setModal(!modal);}
-
   const [modal, setModal] = useState(false);
 
-  const [item, setItem] = useState({
-    id: '',
-    firstname: '',
-    lastname: '',
-    emailAddress: '',
-    password: '',
-    init: false
-  });
+  const toggle = () => {setModal(!modal);}
 
   function handleInputChange(e) {
 
-    setItem({[e.target.name]: e.target.value});
     props.values[e.target.name] = e.target.value;
-    props.values.edited = true;
 
   }
-
-  function searchMemberInfomation() {
-
-    fetch('http://localhost:8080/loginSearchName?id=' + searchIdFromUrl(), {
-      method: 'GET',
-      mode: 'cors',
-      cache: "no-cache",
-      headers: {
-          "Content-Type": "application/json; charset=utf-8"
-      }
-    })
-    .then(response => response.json())
-    .then((json) => {
-        setItem({
-          id: json.id,
-          firstname: json.firstname,
-          lastname: json.lastname,
-          emailAddress: json.myUsername,
-          password: json.myPassword,
-          init: true
-        });
-    })
-    .catch(error => console.error('Error:サーバーが混み合っています', error));
-
-  }
-
-  useEffect(() => {
-
-  	if (item.init) {
-      props.values.oldItem = item;
-      props.values.id = item.id;
-      props.values.password = item.password;
-      return;
-    }
-
-    searchMemberInfomation();
-
-  });
 
   return (
     <div>
@@ -83,18 +34,18 @@ const ProfileModal = (props) => {
                 <Form className="text-left" onSubmit={handleSubmit}>
                     <FormGroup className="form-group">
                         <Label for="First name">Firstname</Label>
-                        <Field type="text" name="firstname" className="form-control" defaultValue={item.firstname} onChange={(e) => { handleInputChange(e) }} />
+                        <Field type="text" name="firstname" className="form-control" defaultValue={props.member.firstname} onChange={(e) => { handleInputChange(e) }} />
                         {(touched && errors.firstname) ? <ErrorInnerMessage name="firstname" /> : null}
                     </FormGroup>
                     <FormGroup className="form-group">
                         <Label for="Last name">Lastname</Label>
-                        <Field type="text" name="lastname" className="form-control" defaultValue={item.lastname} onChange={(e) => { handleInputChange(e) }} />
+                        <Field type="text" name="lastname" className="form-control" defaultValue={props.member.lastname} onChange={(e) => { handleInputChange(e) }} />
                         {(touched && errors.lastname) ? <ErrorInnerMessage name="lastname" /> : null}
                     </FormGroup>
                     <FormGroup className="form-group">
-                        <Label for="emailAddress">EmailAddress</Label>
-                        <Field type="email" name="emailAddress" className="form-control" defaultValue={item.emailAddress} onChange={(e) => { handleInputChange(e) }} />
-                        {(touched && errors.emailAddress) ? <ErrorInnerMessage name="emailAddress" /> : null}
+                        <Label for="myUsername">EmailAddress</Label>
+                        <Field type="email" name="myUsername" className="form-control" defaultValue={props.member.myUsername} onChange={(e) => { handleInputChange(e) }} />
+                        {(touched && errors.myUsername) ? <ErrorInnerMessage name="myUsername" /> : null}
                     </FormGroup>
                     <FormGroup className="form-group">
                         <Label for="password">Password</Label>
@@ -103,17 +54,17 @@ const ProfileModal = (props) => {
                     </FormGroup>
                     <FormGroup className="form-group">
                         <Label for="newPassword">NewPassword</Label>
-                        <Field id="newPassword" type="password" name="newPassword" className="form-control" placeholder="Enter newPassword" onChange={(e) => { handleInputChange(e) }}  />
+                        <Field id="newPassword" type="password" name="newPassword" className="form-control" placeholder="Enter newPassword" />
                         <ErrorInnerMessage name="newPassword" />
                         <PasswordStrengthMeter password={values.newPassword} />
                         {(touched && errors.newPassword) ? <ErrorInnerMessage name="password" /> : null}
                     </FormGroup>
                     <FormGroup className="form-group">
                         <Label for="confirmPassword">Confirm Password</Label>
-                        <Field type="password" name="confirmPassword" className="form-control" placeholder="Enter confirmPassword" onChange={(e) => { handleInputChange(e) }}  />
+                        <Field type="password" name="confirmPassword" className="form-control" placeholder="Enter confirmPassword" />
                         <ErrorInnerMessage name="confirmPassword" />
                     </FormGroup>
-                    <Button type="submit" className="btn-block" color="primary" disabled={!props.values.edited || isSubmitting}>Submit</Button>
+                    <Button type="submit" className="btn-block" color="primary" disabled={!dirty || isSubmitting}>Submit</Button>
                 </Form>
               </div>
         </ModalBody>
@@ -128,13 +79,13 @@ const ProfileModal = (props) => {
 }
 
 const MyEnhancedForm = withFormik({
-  mapPropsToValues: props => ({edited: false, newPassword: '', confirmPassword: ''}),
+  mapPropsToValues: props => ({password:props.member.myPassword, newPassword: '', confirmPassword: ''}),
   validationSchema: Yup.object().shape({
       firstname: Yup.string().min(1, 'firstname is too short')
                              .max(10, 'firstname is too long'),
       lastname: Yup.string().min(1, 'lastname is too short')
                             .max(10, 'lastname is too long'),
-      emailAddress: Yup.string().min(10, 'emailAddress is too short')
+      myUsername: Yup.string().min(10, 'emailAddress is too short')
                                 .max(30, 'emailAddress is too long'),
       password: Yup.string().min(8, 'password is too short'),                                
       newPassword: Yup.string().min(8, 'newPassword is too short')
@@ -161,11 +112,11 @@ const MyEnhancedForm = withFormik({
               "Content-Type": "application/json; charset=utf-8"
           },
           body : JSON.stringify({
-              id : values.id,
-              firstname: values.firstname === undefined ? values.oldItem.firstname : values.firstname,
-              lastname: values.lastname === undefined ? values.oldItem.lastname : values.lastname,
-              emailAddress: values.emailAddress === undefined ? values.oldItem.emailAddress : values.emailAddress,
-              password: values.newPassword === "" ? values.password : values.newPassword
+              id : props.member.id,
+              firstname: values.firstname === undefined ? props.member.firstname: values.firstname,
+              lastname: values.lastname === undefined ? props.member.lastname: values.lastname,
+              emailAddress: values.emailAddress === undefined ? props.member.myUsername: values.emailAddress ,
+              password: values.newPassword === "" ? props.member.myPassword: values.newPassword 
            }),
 
       })
