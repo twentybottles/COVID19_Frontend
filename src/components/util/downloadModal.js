@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { withFormik } from 'formik';
 import { Button, Modal, ModalHeader, ModalFooter } from 'reactstrap';
 import CsvCreator from 'react-csv-creator';

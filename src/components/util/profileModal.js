@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { withFormik, ErrorMessage, Field } from 'formik';
 import { Form, Button, FormGroup, Label, Modal, ModalBody, ModalHeader, ModalFooter } from 'reactstrap';
 import * as Yup from 'yup';
 import PasswordStrengthMeter from '../util/passwordStrengthMeter';
-import searchIdFromUrl from './function/searchIdFromUrl';
-
 
 const ProfileModal = (props) => {
 
