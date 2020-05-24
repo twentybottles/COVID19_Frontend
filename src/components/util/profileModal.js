@@ -10,18 +10,9 @@ const ProfileModal = (props) => {
 
   const ErrorInnerMessage = ({ name }) => (<ErrorMessage name={name} component={({ children }) => (<span className="errorMsg">{children}</span>)} />);
 
-  const [item, setItem] = useState(props.member);
-
   const [modal, setModal] = useState(false);
 
   const toggle = () => {setModal(!modal);}
-
-  const handleInputChange = (e) => {
-
-  	setItem({[e.target.name]: e.target.value});
-    props.values[e.target.name] = e.target.value;
-
-  }
 
   return (
     <div>
@@ -34,18 +25,18 @@ const ProfileModal = (props) => {
                   <Form className="text-left" onSubmit={handleSubmit}>
                       <FormGroup className="form-group">
                           <Label for="First name">Firstname</Label>
-                          <Field type="text" name="firstname" className="form-control" defaultValue={item.firstname} onChange={(e) => {handleInputChange(e)}} />
+                          <Field type="text" name="firstname" className="form-control" />
                           {(touched && errors.firstname) ? <ErrorInnerMessage name="firstname" /> : null}
                       </FormGroup>
                       <FormGroup className="form-group">
                           <Label for="Last name">Lastname</Label>
-                          <Field type="text" name="lastname" className="form-control" defaultValue={item.lastname} onChange={(e) => {handleInputChange(e)}} />
+                          <Field type="text" name="lastname" className="form-control" />
                           {(touched && errors.lastname) ? <ErrorInnerMessage name="lastname" /> : null}
                       </FormGroup>
                       <FormGroup className="form-group">
-                          <Label for="myUsername">EmailAddress</Label>
-                          <Field type="email" name="myUsername" className="form-control" defaultValue={item.myUsername} onChange={(e) => {handleInputChange(e)}} />
-                          {(touched && errors.myUsername) ? <ErrorInnerMessage name="myUsername" /> : null}
+                          <Label for="emailAddress">EmailAddress</Label>
+                          <Field type="email" name="emailAddress" className="form-control" />
+                          {(touched && errors.emailAddress) ? <ErrorInnerMessage name="emailAddress" /> : null}
                       </FormGroup>
                       <FormGroup className="form-group">
                           <Label for="password">Password</Label>
@@ -79,13 +70,20 @@ const ProfileModal = (props) => {
 }
 
 const MyEnhancedForm = withFormik({
-  mapPropsToValues: props => ({password:props.member.myPassword, newPassword: '', confirmPassword: ''}),
+  mapPropsToValues: props => ({
+    firstname: props.member.firstname, 
+    lastname: props.member.lastname, 
+    emailAddress: props.member.myUsername, 
+    password:props.member.myPassword, 
+    newPassword: '', 
+    confirmPassword: ''
+  }),
   validationSchema: Yup.object().shape({
       firstname: Yup.string().min(1, 'firstname is too short')
                              .max(10, 'firstname is too long'),
       lastname: Yup.string().min(1, 'lastname is too short')
                             .max(10, 'lastname is too long'),
-      myUsername: Yup.string().min(10, 'emailAddress is too short')
+      emailAddress: Yup.string().min(10, 'emailAddress is too short')
                                 .max(30, 'emailAddress is too long'),
       password: Yup.string().min(8, 'password is too short'),                                
       newPassword: Yup.string().min(8, 'newPassword is too short')
@@ -113,10 +111,10 @@ const MyEnhancedForm = withFormik({
           },
           body : JSON.stringify({
               id : props.member.id,
-              firstname: values.firstname === undefined ? props.member.firstname: values.firstname,
-              lastname: values.lastname === undefined ? props.member.lastname: values.lastname,
-              emailAddress: values.emailAddress === undefined ? props.member.myUsername: values.emailAddress ,
-              password: values.newPassword === "" ? props.member.myPassword: values.newPassword 
+              firstname: values.firstname,
+              lastname: values.lastname,
+              emailAddress: values.emailAddress,
+              password: values.newPassword === "" ? props.member.myPassword: values.newPassword
            }),
 
       })
