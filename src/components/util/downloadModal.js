@@ -1,20 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { withFormik } from 'formik';
-import { Form, Button, Modal, ModalHeader, ModalFooter } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalFooter } from 'reactstrap';
 import CsvCreator from 'react-csv-creator';
 
 const DownloadModal = (props) => {
 
-  const [res, setRes] = useState({init:false});
-
   const [modal, setModal] = useState(false);
 
-  const toggle = () => {
-    setRes({init:false});
-    setModal(!modal);
-  }
-
-  const rows = [];
+  const toggle = () => {setModal(!modal);}
   
   const headers = [
     {id:'CountryCode', display:'Code'}, 
@@ -29,42 +22,14 @@ const DownloadModal = (props) => {
     {id:'Date', display:'Date'}
   ];
 
-
-  useEffect(() => {
-
-    if (res.init) {return;}
-
-    fetch('http://localhost:8080/covidSearchSummary', {
-            method: 'GET',
-            mode: 'cors',
-            cache: "force-cache",
-            headers: {
-                "Content-Type": "application/json; charset=utf-8"
-            },
-        })
-        .then(response => response.json())
-        .then((json) => {
-
-          json.Countries.map((country) => {rows.push(country);})
-
-          setRes ({
-            date: json.Date,
-            init: true
-          });
-        })
-        .catch(error => console.error('Error:サーバーが混み合っています', error)
-    );
-
-  });
-
   return (
     <div>
-      <span onClick={toggle} className="">Download</span>
+      <span onClick={toggle}>Download</span>
       <Modal isOpen={modal} toggle={toggle} className="modal-lg">
-        <ModalHeader toggle={toggle}>Would you downloaded all of the data？：</ModalHeader>
+        <ModalHeader toggle={toggle}>Would you download all of the data？</ModalHeader>
         <ModalFooter>
           <Button color="primary" onClick={toggle}>
-            <CsvCreator filename="covid19_summary" headers={headers} rows={rows} text="Yes" /> 
+            <CsvCreator filename="covid19_summary" headers={headers} rows={props.countries} text="Yes" /> 
           </Button>
           <Button color="secondary" onClick={toggle}>Close</Button>
         </ModalFooter>

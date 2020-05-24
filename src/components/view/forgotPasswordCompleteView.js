@@ -4,7 +4,7 @@ import { withFormik } from 'formik';
 
 class ForgotPasswordCompleteView extends Component {
 
-        render() {
+    render() {
 
         const {handleSubmit} = this.props;
 

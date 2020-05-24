@@ -82,8 +82,6 @@ const MyEnhancedForm = withFormik({
         })
         .catch(error => console.error('Error:', error));
 
-
-
     },
 })(LoginView);
 

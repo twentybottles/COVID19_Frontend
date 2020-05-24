@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
 import { withFormik } from 'formik';
 import { Dropdown } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
@@ -11,20 +10,18 @@ class LoginMenuDropDown extends Component {
     render() {
 
         return (
-            <Dropdown text={this.props.name} >
+            <Dropdown text={this.props.member.firstname + "\t" + this.props.member.lastname} >
                 <Dropdown.Menu>
                     <Dropdown.Item className="dropdown">
-                        <ProfileModal />
+                        <ProfileModal member={this.props.member} />
                     </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item>
-                        <DownloadModal />
+                        <DownloadModal countries={this.props.countries} />
                     </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item>
-                        <Link to="/" style={{color:'black'}}>
-                            <span className="text" onClick={() => {this.props.setLogoutMenu()}}>Sign out</span>
-                        </Link>
+                        <span className="text" onClick={() => {this.logout()}}>Sign out</span>
                     </Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
@@ -32,30 +29,18 @@ class LoginMenuDropDown extends Component {
 
     }
 
-    getIdFromUrl() {
+    logout() {
 
-        let urlParamStr = window.location.search;
-        let params = {}
-
-        if (urlParamStr) {
-
-            urlParamStr = urlParamStr.substring(1)
-            urlParamStr.split('&').forEach( param => {
-                const temp = param.split('=')
-                params = {
-                    ...params,
-                    [temp[0]]: temp[1]
-                }
-            })
+        if(window.confirm('Sign out of COVID19.com')) {
+            this.props.setLogoutMenu();
+            window.location.href = 'http://localhost:3000';
         }
-
-        return params.id;
 
     }
 
 }
 
-const MyEnhancedForm = withFormik({
-})(LoginMenuDropDown);
+
+const MyEnhancedForm = withFormik({})(LoginMenuDropDown);
 
 export default MyEnhancedForm;
