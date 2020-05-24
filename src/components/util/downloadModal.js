@@ -26,7 +26,7 @@ const DownloadModal = (props) => {
     <div>
       <span onClick={toggle}>Download</span>
       <Modal isOpen={modal} toggle={toggle} className="modal-lg">
-        <ModalHeader toggle={toggle}>Would you downloaded all of the data？</ModalHeader>
+        <ModalHeader toggle={toggle}>Would you download all of the data？</ModalHeader>
         <ModalFooter>
           <Button color="primary" onClick={toggle}>
             <CsvCreator filename="covid19_summary" headers={headers} rows={props.countries} text="Yes" /> 

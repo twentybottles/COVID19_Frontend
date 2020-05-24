@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
-
 import LoginView from "./components/view/loginView";
 import MypageView from "./components/view/mypageView";
 import SignUpView from "./components/view/signupView";
@@ -33,11 +32,7 @@ class ViewController extends Component {
 
   }
 
-  setLogoutMenu() {
-
-      this.setState({ isLogin: false });
-
-  }
+  setLogoutMenu() {this.setState({ isLogin: false });}
 
   render() {
 

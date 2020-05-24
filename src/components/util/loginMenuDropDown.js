@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
 import { withFormik } from 'formik';
 import { Dropdown } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
@@ -22,9 +21,7 @@ class LoginMenuDropDown extends Component {
                     </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item>
-                        <Link to="/" style={{color:'black'}}>
-                            <span className="text" onClick={() => {this.props.setLogoutMenu()}}>Sign out</span>
-                        </Link>
+                        <span className="text" onClick={() => {this.logout()}}>Sign out</span>
                     </Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
@@ -32,7 +29,17 @@ class LoginMenuDropDown extends Component {
 
     }
 
+    logout() {
+
+        if(window.confirm('Sign out of COVID19.com')) {
+            this.props.setLogoutMenu();
+            window.location.href = 'http://localhost:3000';
+        }
+
+    }
+
 }
+
 
 const MyEnhancedForm = withFormik({})(LoginMenuDropDown);
 
