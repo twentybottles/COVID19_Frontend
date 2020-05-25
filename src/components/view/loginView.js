@@ -48,7 +48,6 @@ const MyEnhancedForm = withFormik({
                                 .max(30, 'Username is too long')
                                 .required('Username is required'),
         myPassword: Yup.string().min(8, 'myPassword is too short')
-                                .max(10, 'myPassword is too long')
                                 .required('myPassword is required')
     }),
     handleSubmit: (values, { setErrors, props, setSubmitting }) => {

@@ -12,6 +12,7 @@ class MypageView extends Component {
 
 	    super(props);
 	    this.state = {
+	    	isInit: false,
 			date: '',
 			newConfirmed: '',
 			totalConfirmed: '',
@@ -33,6 +34,7 @@ class MypageView extends Component {
 		.then(response => response.json())
 		.then((json) => {
 		this.setState({
+			isInit: true,
 			date: json.Date,
 			newConfirmed: json.Global.NewConfirmed,
 			totalConfirmed: json.Global.TotalConfirmed,
@@ -47,24 +49,6 @@ class MypageView extends Component {
 
 	}
 
-    componentDidMount() {
-
-		fetch('http://localhost:8080/loginSearchName?id=' + searchIdFromUrl(), {
-	        method: 'GET',
-	        mode: 'cors',
-	        cache: "no-cache",
-	        headers: {
-	            "Content-Type": "application/json; charset=utf-8"
-	        },
-	    })
-	    .then(response => response.json())
-	    .then((json) => {
-			this.props.setLoginMenu(json, this.state.countries);
-	  	})
-	    .catch(error => console.error('Error:サーバーが混み合っています', error));
-
-    }
-
     render() {
 
     	if (this.state.countries.length === 0) {
@@ -77,6 +61,24 @@ class MypageView extends Component {
 
     	}
 
+    	if (this.state.isInit) {
+
+			fetch('http://localhost:8080/loginSearchName?id=' + searchIdFromUrl(), {
+		        method: 'GET',
+		        mode: 'cors',
+		        cache: "no-cache",
+		        headers: {
+		            "Content-Type": "application/json; charset=utf-8"
+		        },
+		    })
+		    .then(response => response.json())
+		    .then((json) => {
+				this.props.setLoginMenu(json, this.state.countries);
+		  	})
+		    .catch(error => console.error('Error:サーバーが混み合っています', error));
+		    this.state.isInit = false;
+
+    	}
 
         return (
             <div className="auth-inner-large">

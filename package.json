@@ -8,6 +8,9 @@
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.4.1",
     "formik": "^2.1.4",
+    "gulp": "^4.0.2",
+    "gulp-cli": "^2.2.1",
+    "history": "^4.10.1",
     "isemail": "^3.2.0",
     "js-cookie": "^2.2.1",
     "js-cookies": "^1.0.4",
@@ -31,10 +34,10 @@
     "zxcvbn": "^4.4.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server/server.js",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "postinstall": "gulp browserify",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "eslintConfig": {
     "extends": "react-app"
