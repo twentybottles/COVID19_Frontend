@@ -15,20 +15,13 @@ class ViewController extends Component {
 
     super(props);
 
-    this.state = {
-      member: {},
-      countries: {},      
-      isLogin: false
-    }
+    this.state = {member: {},countries: {},isLogin: false}
 
   }
 
   setLoginMenu(member, countries) {
 
-    this.setState({ 
-    member: member,
-    countries: countries,
-    isLogin: true });
+    this.setState({member: member,countries: countries,isLogin: true });
 
   }
 
@@ -67,7 +60,6 @@ class ViewController extends Component {
           </div>
           {navbar}
         </nav>
-
         <div className="auth-wrapper">
           <Switch>
             <Route exact path='/' component={LoginView} />

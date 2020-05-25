@@ -76,7 +76,7 @@ class MypageView extends Component {
 				this.props.setLoginMenu(json, this.state.countries);
 		  	})
 		    .catch(error => console.error('Error:サーバーが混み合っています', error));
-		    this.state.isInit = false;
+		    this.setState({isInit:false});
 
     	}
 
@@ -113,8 +113,8 @@ class MypageView extends Component {
 					                    <ChartModal 
 					                        countryName={country.Country} 
 					                        countryCode={country.CountryCode}
-					                        countrySlug={country.CountrySlug}
-					                        className="modal-xl"
+					                        countrySlug={country.Slug}
+					                        className="modal-lg"
 					                    />
 					                </td>
 					                <td>{country.Country}</td>
