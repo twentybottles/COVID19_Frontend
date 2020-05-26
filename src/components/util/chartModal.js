@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { withFormik } from 'formik';
 import moment from 'moment/moment'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { LineChart, XAxis, YAxis, Tooltip, Legend, CartesianGrid, Line } from 'recharts'
+import { LineChart, XAxis, YAxis, Tooltip, Legend, CartesianGrid, Line, ResponsiveContainer } from 'recharts'
 
 const ChartModal = (props) => {
 
@@ -25,7 +25,7 @@ const ChartModal = (props) => {
       },
     })
     .then(response => response.json())
-    .then((json) => {setItem({data:json});})
+    .then(json => setItem({data:json}))
     .catch(error => console.error('Error:サーバーが混み合っています', error));
 
   }
@@ -36,7 +36,8 @@ const ChartModal = (props) => {
       <Modal isOpen={modal} toggle={() => {setModal(!modal)}} className={className}>
         <ModalHeader toggle={() => {setModal(!modal)}}>COVID19 CHART(2020)：{countryName}</ModalHeader>
         <ModalBody>
-          <LineChart width={780} height={500} data={item.data} margin={{top:5,right:30,left:5,bottom:5}}>
+          <ResponsiveContainer minWidth={400} minHeight={400}>
+          <LineChart  data={item.data} margin={{top:5,right:30,left:5,bottom:1}}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="Date" angle={30} tickFormatter={(tickItem) => moment(tickItem).format('MM/DD')} />
             <YAxis />
@@ -46,6 +47,7 @@ const ChartModal = (props) => {
             <Line type="monotone" dataKey="Deaths" stroke="red" />
             <Line type="monotone" dataKey="Recovered" stroke="#82ca9d" />
           </LineChart>
+           </ResponsiveContainer>
         </ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={() => {setModal(!modal)}}>Close</Button>

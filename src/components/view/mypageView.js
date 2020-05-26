@@ -8,7 +8,7 @@ import '../../flag-icon-css-master/css/flag-icon.css';
 
 class MypageView extends Component {
 
-   constructor(props){
+   constructor(props) {
 
 	    super(props);
 	    this.state = {
@@ -32,8 +32,7 @@ class MypageView extends Component {
 			},
 		})
 		.then(response => response.json())
-		.then((json) => {
-		this.setState({
+		.then(json => this.setState({
 			isInit: true,
 			date: json.Date,
 			newConfirmed: json.Global.NewConfirmed,
@@ -43,25 +42,15 @@ class MypageView extends Component {
 			newRecovered: json.Global.NewRecovered,
 			totalRecovered: json.Global.TotalRecovered,
 			countries: json.Countries
-			});
-		 })
+			})
+		)
 		.catch(error => console.error('Error:サーバーが混み合っています', error));
 
 	}
 
-    render() {
+	componentDidUpdate() {
 
-    	if (this.state.countries.length === 0) {
-
-    		return (
-	            <div className="auth-inner-large">
-					<ClipLoader className="auth-inner-large" css={override} size={100} />
-				</div>
-    		);
-
-    	}
-
-    	if (this.state.isInit) {
+		 if (this.state.isInit) {
 
 			fetch('http://localhost:8080/loginSearchName?id=' + searchIdFromUrl(), {
 		        method: 'GET',
@@ -77,6 +66,20 @@ class MypageView extends Component {
 		  	})
 		    .catch(error => console.error('Error:サーバーが混み合っています', error));
 		    this.setState({isInit:false});
+
+		 }
+
+	}
+
+    render() {
+
+    	if (this.state.countries.length === 0) {
+
+    		return (
+	            <div className="auth-inner-large">
+					<ClipLoader className="auth-inner-large" css={override} size={100} />
+				</div>
+    		);
 
     	}
 
