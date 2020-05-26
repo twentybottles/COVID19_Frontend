@@ -25,7 +25,7 @@ const ChartModal = (props) => {
       },
     })
     .then(response => response.json())
-    .then((json) => {setItem({data:json});})
+    .then(json => setItem({data:json}))
     .catch(error => console.error('Error:サーバーが混み合っています', error));
 
   }

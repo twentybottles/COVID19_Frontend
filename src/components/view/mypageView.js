@@ -23,6 +23,10 @@ class MypageView extends Component {
 			countries:[]
 	    }
 
+	}
+
+	componentDidMount() {
+
 	    fetch('http://localhost:8080/covidSearchSummary', {
 			method: 'GET',
 			mode: 'cors',
@@ -32,8 +36,7 @@ class MypageView extends Component {
 			},
 		})
 		.then(response => response.json())
-		.then((json) => {
-		this.setState({
+		.then(json => this.setState({
 			isInit: true,
 			date: json.Date,
 			newConfirmed: json.Global.NewConfirmed,
@@ -43,8 +46,8 @@ class MypageView extends Component {
 			newRecovered: json.Global.NewRecovered,
 			totalRecovered: json.Global.TotalRecovered,
 			countries: json.Countries
-			});
-		 })
+			})
+		)
 		.catch(error => console.error('Error:サーバーが混み合っています', error));
 
 	}
