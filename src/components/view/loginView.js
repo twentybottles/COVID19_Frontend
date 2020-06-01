@@ -42,7 +42,7 @@ class LoginView extends Component {
 const ErrorInnerMessage = ({ name }) => (<ErrorMessage name={name} component={({ children }) => (<span className="errorMsg">{children}</span>)} />);
 
 const MyEnhancedForm = withFormik({
-    mapPropsToValues: props => ({myUsername: '', myPassword: '', isRememberMe: false, authentication: ''}),
+    mapPropsToValues: props => ({myUsername: '', myPassword: '', isRememberMe: false, authentication: '', csrfToken: '', id: ''}),
     validationSchema: Yup.object().shape({
         myUsername: Yup.string().min(10, 'Username is too short')
                                 .max(30, 'Username is too long')
@@ -54,30 +54,42 @@ const MyEnhancedForm = withFormik({
 
         setSubmitting(false);
 
-        fetch('http://localhost:8080/loginAuthentication', {
+        fetch('http://localhost:8080/authentication', {
             method: 'POST',
             mode: 'cors',
-            // cache: "no-cache",
-            // credentials: "same-origin",
-            // headers: {
-            //     "Content-Type": "application/json; charset=utf-8",
-            //     'X-XSRF-TOKEN': Cookie.get('XSRF-TOKEN')
-            // },
+            cache: "no-cache",
+            credentials: 'same-origin',
             headers: {
                 "Content-Type": "application/json; charset=utf-8"
             },
             body : JSON.stringify({ 
-                myUsername: values.myUsername,
-                myPassword: values.myPassword
-             }),
+                username: values.myUsername,
+                password: values.myPassword
+            }),
+        })
+        .then(function(response) {
+            if(!response.ok) {
+                return setErrors({ authentication : 'Either Username or Password is invalid' });  
+            }
+        })
+        .catch(error => console.error('Error:', error));
+
+        fetch('http://localhost:8080/login/search/id', {
+            method: 'POST',
+            mode: 'cors',
+            cache: "no-cache",
+            credentials: 'same-origin',
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            body : values.myUsername,
 
         })
         .then(response => response.json())
-        .then(function(response) {
-            if (response.length > 0) {
-                props.history.push('/mypage?id='+response[0].id);
-            }
-            return setErrors({ authentication : 'Either Username or Password is invalid' });
+        .then(json => {
+            props.history.push({
+                pathname: '/mypage?id=' + json.id
+            })
         })
         .catch(error => console.error('Error:', error));
 

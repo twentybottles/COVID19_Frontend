@@ -23,7 +23,7 @@ class MypageView extends Component {
 			countries:[]
 	    }
 
-	    fetch('http://localhost:8080/covidSearchSummary', {
+	    fetch('http://localhost:8080/covid/search/summary', {
 			method: 'GET',
 			mode: 'cors',
 			cache: "force-cache",
@@ -52,7 +52,7 @@ class MypageView extends Component {
 
 		 if (this.state.isInit) {
 
-			fetch('http://localhost:8080/loginSearchName?id=' + searchIdFromUrl(), {
+			fetch('http://localhost:8080/login/search/name?id=' + searchIdFromUrl(), {
 		        method: 'GET',
 		        mode: 'cors',
 		        cache: "no-cache",
@@ -73,7 +73,7 @@ class MypageView extends Component {
 
     render() {
 
-    	if (this.state.countries.length === 0) {
+    	if (this.state.countries.length < 1) {
 
     		return (
 	            <div className="auth-inner-large">

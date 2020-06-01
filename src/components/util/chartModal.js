@@ -16,7 +16,7 @@ const ChartModal = (props) => {
 
     setModal(!modal);
 
-    fetch('http://localhost:8080/covidSearchCountry?countrySlug=' + countrySlug, {
+    fetch('http://localhost:8080/covid/search/country?countrySlug=' + countrySlug, {
       method: 'GET',
       mode: 'cors',
       cache: "force-cache",

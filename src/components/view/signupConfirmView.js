@@ -42,7 +42,7 @@ class SignUpConfirmView extends Component {
 const MyEnhancedForm = withFormik({
     handleSubmit: (values, { props }) => {    
         
-        fetch('http://localhost:8080/signupRegister', {
+        fetch('http://localhost:8080/signup/register', {
             method: 'POST',
             mode: 'cors',
             // cache: "no-cache",
@@ -55,7 +55,7 @@ const MyEnhancedForm = withFormik({
                 "Content-Type": "application/json; charset=utf-8"
             },
             body : JSON.stringify({ 
-                emailAddress: values.location.state.emailAddress,
+                email: values.location.state.emailAddress,
                 firstname: values.location.state.firstname,
                 lastname: values.location.state.lastname,
                 password: values.location.state.password
