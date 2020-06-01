@@ -39,11 +39,6 @@ const ProfileModal = (props) => {
                           {(touched && errors.emailAddress) ? <ErrorInnerMessage name="emailAddress" /> : null}
                       </FormGroup>
                       <FormGroup className="form-group">
-                          <Label for="password">Password</Label>
-                          <Field type="text" name="password" className="form-control" disabled={true} />
-                          {(touched && errors.password) ? <ErrorInnerMessage name="password" /> : null}
-                      </FormGroup>
-                      <FormGroup className="form-group">
                           <Label for="newPassword">NewPassword</Label>
                           <Field id="newPassword" type="password" name="newPassword" className="form-control" placeholder="Enter newPassword" />
                           <ErrorInnerMessage name="newPassword" />
@@ -73,8 +68,7 @@ const MyEnhancedForm = withFormik({
   mapPropsToValues: props => ({
     firstname: props.member.firstname, 
     lastname: props.member.lastname, 
-    emailAddress: props.member.myUsername, 
-    password:props.member.myPassword, 
+    emailAddress: props.member.email,  
     newPassword: '', 
     confirmPassword: ''
   }),
@@ -85,11 +79,7 @@ const MyEnhancedForm = withFormik({
                             .max(10, 'lastname is too long'),
       emailAddress: Yup.string().min(10, 'emailAddress is too short')
                                 .max(30, 'emailAddress is too long'),
-      password: Yup.string().min(8, 'password is too short'),                                
-      newPassword: Yup.string().min(8, 'newPassword is too short')
-                               .test('not unique','NewPassword is already used', function(value) {
-                                return this.parent.password !== value;
-                              }),
+      newPassword: Yup.string().min(8, 'newPassword is too short'),
       confirmPassword: Yup.string().oneOf([Yup.ref('newPassword'), null], 'NewPassword must match')
   }),
 
@@ -97,7 +87,7 @@ const MyEnhancedForm = withFormik({
 
       setSubmitting(false);
 
-      fetch('http://localhost:8080/signupRegister', {
+      fetch('http://localhost:8080/signup/register', {
           method: 'POST',
           mode: 'cors',
           // cache: "no-cache",
@@ -113,8 +103,8 @@ const MyEnhancedForm = withFormik({
               id : props.member.id,
               firstname: values.firstname,
               lastname: values.lastname,
-              emailAddress: values.emailAddress,
-              password: values.newPassword === "" ? props.member.myPassword: values.newPassword
+              email: values.emailAddress,
+              password: values.newPassword === "" ? props.member.password: values.newPassword
            }),
 
       })
