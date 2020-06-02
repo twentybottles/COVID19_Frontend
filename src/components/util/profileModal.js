@@ -87,6 +87,32 @@ const MyEnhancedForm = withFormik({
 
       setSubmitting(false);
 
+      if (values.emailAddress !== props.member.username) {
+
+        fetch('http://localhost:8080/signup/search/username', {
+            method: 'POST',
+            mode: 'cors',
+            // cache: "no-cache",
+            // credentials: "same-origin",
+            // headers: {
+            //     "Content-Type": "application/json; charset=utf-8",
+            //     'X-XSRF-TOKEN': Cookie.get('XSRF-TOKEN')
+            // },
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            body : values.emailAddress
+        })
+        .then(response => response.json())
+        .then(function(result) {
+            if (result) {
+                return setErrors({ emailAddress : 'Email Address is already registered' });
+            }
+        })
+        .catch(error => console.error('Error:', error));
+
+      }
+
       fetch('http://localhost:8080/signup/register', {
           method: 'POST',
           mode: 'cors',

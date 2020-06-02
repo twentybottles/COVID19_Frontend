@@ -42,7 +42,7 @@ class LoginView extends Component {
 const ErrorInnerMessage = ({ name }) => (<ErrorMessage name={name} component={({ children }) => (<span className="errorMsg">{children}</span>)} />);
 
 const MyEnhancedForm = withFormik({
-    mapPropsToValues: props => ({myUsername: '', myPassword: '', isRememberMe: false}),
+    mapPropsToValues: props => ({myUsername: '', myPassword: '', isRememberMe: false, authentication: ''}),
     validationSchema: Yup.object().shape({
         myUsername: Yup.string().min(10, 'Username is too short')
                                 .max(30, 'Username is too long')
@@ -67,9 +67,11 @@ const MyEnhancedForm = withFormik({
                 password: values.myPassword
             }),
         })
-        .then(response => response.json())
-        .then(json => {
-            props.history.push({pathname: '/mypage?id=' + json.id});
+        .then(response => {
+            if(response.ok) {
+                props.history.push({pathname: '/mypage?id=' + response.json().id});
+            }
+            return setErrors({ authentication : 'Either Username or Password is invalid' });
         })
         .catch(error => console.error('Error:', error));
 
