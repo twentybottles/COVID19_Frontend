@@ -55,7 +55,7 @@ const MyEnhancedForm = withFormik({
                 "Content-Type": "application/json; charset=utf-8"
             },
             body : JSON.stringify({ 
-                email: values.location.state.emailAddress,
+                username: values.location.state.emailAddress,
                 firstname: values.location.state.firstname,
                 lastname: values.location.state.lastname,
                 password: values.location.state.password

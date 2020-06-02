@@ -68,7 +68,7 @@ const MyEnhancedForm = withFormik({
   mapPropsToValues: props => ({
     firstname: props.member.firstname, 
     lastname: props.member.lastname, 
-    emailAddress: props.member.email,  
+    emailAddress: props.member.username,  
     newPassword: '', 
     confirmPassword: ''
   }),
@@ -103,7 +103,7 @@ const MyEnhancedForm = withFormik({
               id : props.member.id,
               firstname: values.firstname,
               lastname: values.lastname,
-              email: values.emailAddress,
+              username: values.emailAddress,
               password: values.newPassword === "" ? props.member.password: values.newPassword
            }),
 
