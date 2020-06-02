@@ -87,37 +87,11 @@ const MyEnhancedForm = withFormik({
 
       setSubmitting(false);
 
-      if (values.emailAddress !== props.member.username) {
-
-        fetch('http://localhost:8080/signup/search/username', {
-            method: 'POST',
-            mode: 'cors',
-            // cache: "no-cache",
-            // credentials: "same-origin",
-            // headers: {
-            //     "Content-Type": "application/json; charset=utf-8",
-            //     'X-XSRF-TOKEN': Cookie.get('XSRF-TOKEN')
-            // },
-            headers: {
-                "Content-Type": "application/json; charset=utf-8"
-            },
-            body : values.emailAddress
-        })
-        .then(response => response.json())
-        .then(function(result) {
-            if (result) {
-                return setErrors({ emailAddress : 'Email Address is already registered' });
-            }
-        })
-        .catch(error => console.error('Error:', error));
-
-      }
-
-      fetch('http://localhost:8080/signup/register', {
+      fetch('http://localhost:8080/signup/update', {
           method: 'POST',
           mode: 'cors',
-          // cache: "no-cache",
-          // credentials: "same-origin",
+          cache: "no-cache",
+          credentials: "include",
           // headers: {
           //     "Content-Type": "application/json; charset=utf-8",
           //     'X-XSRF-TOKEN': Cookie.get('XSRF-TOKEN')
@@ -139,6 +113,8 @@ const MyEnhancedForm = withFormik({
           if (result) {
               alert("Your Profile was updated");
               window.location.reload();
+          } else {
+            setErrors({ emailAddress : 'Email Address is already registered' });
           }
       })
       .catch(error => console.error('Error:', error));
