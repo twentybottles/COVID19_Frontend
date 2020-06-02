@@ -59,20 +59,11 @@ const MyEnhancedForm = withFormik({
             mode: 'cors',
             cache: "no-cache",
             credentials: 'include',
-            headers: {
-                "Content-Type": "application/json; charset=utf-8"
-            },
-            body : JSON.stringify({ 
-                username: values.myUsername,
-                password: values.myPassword
-            }),
+            headers: {"Content-Type": "application/json; charset=utf-8"},
+            body : JSON.stringify({ username: values.myUsername, password: values.myPassword}),
         })
-        .then(response => {
-            if(response.ok) {
-                props.history.push({pathname: '/mypage?id=' + response.json().id});
-            }
-            return setErrors({ authentication : 'Either Username or Password is invalid' });
-        })
+        .then(response => response.ok? response.json() : setErrors({ authentication : 'Either Username or Password is invalid' }))
+        .then(json => json !== undefined? props.history.push({pathname: '/mypage', search: '?id=' + json.id}) : null)
         .catch(error => console.error('Error:', error));
 
     },

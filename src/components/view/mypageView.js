@@ -62,19 +62,18 @@ class MypageView extends Component {
 			    },
 			})
 			.then(response => response.json())
-			.then((json) => {
-				this.props.setLoginMenu(json, this.state.countries);
-				})
+			.then((json) => {this.props.setLoginMenu(json, this.state.countries);})
 			.catch(error => console.error('Error:サーバーが混み合っています', error));
+			
 			this.setState({isInit:false});
-
-			}
 
 		}
 
+	}
+
     render() {
 
-    	if (this.state.countries.length < 1) {
+    	if (this.state.countries.length === 0) {
 
     		return (
 	            <div className="auth-inner-large">
