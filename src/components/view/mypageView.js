@@ -32,44 +32,45 @@ class MypageView extends Component {
 			},
 		})
 		.then(response => response.json())
-		.then(json => this.setState({
-			isInit: true,
-			date: json.Date,
-			newConfirmed: json.Global.NewConfirmed,
-			totalConfirmed: json.Global.TotalConfirmed,
-			newDeaths: json.Global.NewDeaths,
-			totalDeaths: json.Global.TotalDeaths,
-			newRecovered: json.Global.NewRecovered,
-			totalRecovered: json.Global.TotalRecovered,
-			countries: json.Countries
-			})
-		)
+		.then(json => {
+			this.setState({
+				isInit: true,
+				date: json.Date,
+				newConfirmed: json.Global.NewConfirmed,
+				totalConfirmed: json.Global.TotalConfirmed,
+				newDeaths: json.Global.NewDeaths,
+				totalDeaths: json.Global.TotalDeaths,
+				newRecovered: json.Global.NewRecovered,
+				totalRecovered: json.Global.TotalRecovered,
+				countries: json.Countries
+			});
+		})
 		.catch(error => console.error('Error:サーバーが混み合っています', error));
 
 	}
 
 	componentDidUpdate() {
 
-		 if (this.state.isInit) {
+		if (this.state.isInit) {
 
-			fetch('http://localhost:8080/login/search/name?id=' + searchIdFromUrl(), {
-		        method: 'GET',
-		        mode: 'cors',
-		        cache: "no-cache",
-		        headers: {
-		            "Content-Type": "application/json; charset=utf-8"
-		        },
-		    })
-		    .then(response => response.json())
-		    .then((json) => {
+			fetch('http://localhost:8080/login/search/userInfo?id=' + searchIdFromUrl(), {
+			    method: 'GET',
+			    mode: 'cors',
+			    cache: "no-cache",
+			    headers: {
+			        "Content-Type": "application/json; charset=utf-8"
+			    },
+			})
+			.then(response => response.json())
+			.then((json) => {
 				this.props.setLoginMenu(json, this.state.countries);
-		  	})
-		    .catch(error => console.error('Error:サーバーが混み合っています', error));
-		    this.setState({isInit:false});
+				})
+			.catch(error => console.error('Error:サーバーが混み合っています', error));
+			this.setState({isInit:false});
 
-		 }
+			}
 
-	}
+		}
 
     render() {
 

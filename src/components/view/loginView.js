@@ -42,7 +42,7 @@ class LoginView extends Component {
 const ErrorInnerMessage = ({ name }) => (<ErrorMessage name={name} component={({ children }) => (<span className="errorMsg">{children}</span>)} />);
 
 const MyEnhancedForm = withFormik({
-    mapPropsToValues: props => ({myUsername: '', myPassword: '', isRememberMe: false, authentication: '', csrfToken: '', id: ''}),
+    mapPropsToValues: props => ({myUsername: '', myPassword: '', isRememberMe: false}),
     validationSchema: Yup.object().shape({
         myUsername: Yup.string().min(10, 'Username is too short')
                                 .max(30, 'Username is too long')
@@ -58,7 +58,7 @@ const MyEnhancedForm = withFormik({
             method: 'POST',
             mode: 'cors',
             cache: "no-cache",
-            credentials: 'same-origin',
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json; charset=utf-8"
             },
@@ -67,29 +67,9 @@ const MyEnhancedForm = withFormik({
                 password: values.myPassword
             }),
         })
-        .then(function(response) {
-            if(!response.ok) {
-                return setErrors({ authentication : 'Either Username or Password is invalid' });  
-            }
-        })
-        .catch(error => console.error('Error:', error));
-
-        fetch('http://localhost:8080/login/search/id', {
-            method: 'POST',
-            mode: 'cors',
-            cache: "no-cache",
-            credentials: 'same-origin',
-            headers: {
-                "Content-Type": "application/json; charset=utf-8"
-            },
-            body : values.myUsername,
-
-        })
         .then(response => response.json())
         .then(json => {
-            props.history.push({
-                pathname: '/mypage?id=' + json.id
-            })
+            props.history.push({pathname: '/mypage?id=' + json.id});
         })
         .catch(error => console.error('Error:', error));
 
