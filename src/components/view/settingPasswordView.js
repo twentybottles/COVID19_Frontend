@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { } from 'react-router-dom';
 import { Button, Form, FormGroup, Label } from 'reactstrap';
 import { withFormik, ErrorMessage, Field } from 'formik';
 import PasswordStrengthMeter from '../util/passwordStrengthMeter';
@@ -9,7 +9,7 @@ class SettingPasswordView extends Component {
     
     render() {
 
-        const {values, errors, touched, dirty, isSubmitting, handleSubmit} = this.props;
+        const {values, dirty, isSubmitting, handleSubmit} = this.props;
     
         return (
             <div className="auth-inner">
@@ -45,23 +45,6 @@ const MyEnhancedForm = withFormik({
         confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
     }),
     handleSubmit: (values, { setErrors, setSubmitting, props }) => {
-
-        let urlParamStr = window.location.search;
-        let params = {}
-
-        if (urlParamStr) {
-
-            urlParamStr = urlParamStr.substring(1)
-            urlParamStr.split('&').forEach( param => {
-              const temp = param.split('=')
-              params = {
-                  ...params,
-                  [temp[0]]: temp[1]
-              }
-            })
-        }
-
-        var token = params.token;
         
         setSubmitting(false);
         
@@ -77,11 +60,11 @@ const MyEnhancedForm = withFormik({
             headers: {
                 "Content-Type": "application/json; charset=utf-8"
             },
-            body : values.password, token
+            body: JSON.stringify({password: values.password, resetToken: props.qs.token})
         })
         .then(response => response.json())
         .then(function(result) {
-            props.history.push({pathname: '/setting-password-complete'})
+            window.location.href = '/setting-password-complete';
         })
         .catch(error => console.error('Error:', error));
         
