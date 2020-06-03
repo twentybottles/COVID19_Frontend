@@ -7,6 +7,8 @@ import SignUpConfirmView from "./components/view/signupConfirmView";
 import SignUpCompleteView from "./components/view/signupCompleteView";
 import ForgotPasswordView from "./components/view/forgotPasswordView";
 import ForgotPasswordCompleteView from "./components/view/forgotPasswordCompleteView";
+import SettingPasswordView from "./components/view/settingPasswordView";
+import SettingPasswordCompleteView from "./components/view/settingPasswordCompleteView";
 import LoginMenuDropDown from './components/util/loginMenuDropDown';
 
 class ViewController extends Component {
@@ -71,6 +73,8 @@ class ViewController extends Component {
             <Route path="/signup-complete" component={SignUpCompleteView} />
             <Route path="/forgot-password" component={ForgotPasswordView} />
             <Route path="/forgot-password-complete" component={ForgotPasswordCompleteView} />
+            <Route path="/setting-password" component={SettingPasswordView} />
+            <Route path="/setting-password-complete" component={SettingPasswordCompleteView} />
           </Switch>
         </div>
       </div>

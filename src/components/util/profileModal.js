@@ -111,8 +111,8 @@ const MyEnhancedForm = withFormik({
       .then(response => response.json())
       .then(function(result) {
           if (result) {
-              alert("Your Profile was updated");
-              window.location.reload();
+              alert("Your Profile was updated.Please signin again!!");
+              window.location.href = 'http://localhost:3000';
           } else {
             setErrors({ emailAddress : 'Email Address is already registered' });
           }
