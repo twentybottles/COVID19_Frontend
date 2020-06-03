@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withFormik } from 'formik';
 import { css } from "@emotion/core";
-import searchIdFromUrl from '../util/function/searchIdFromUrl';
 import ClipLoader from "react-spinners/ClipLoader";
 import ChartModal from '../util/chartModal';
 import '../../flag-icon-css-master/css/flag-icon.css';
@@ -53,13 +52,12 @@ class MypageView extends Component {
 
 		if (this.state.isInit) {
 
-			fetch('http://localhost:8080/login/search/userInfo?id=' + searchIdFromUrl(), {
+			fetch('http://localhost:8080/login/search/userInfo', {
 			    method: 'GET',
 			    mode: 'cors',
 			    cache: "no-cache",
-			    headers: {
-			        "Content-Type": "application/json; charset=utf-8"
-			    },
+			    credentials: "include",
+			    headers: {"Content-Type": "application/json; charset=utf-8"},
 			})
 			.then(response => response.json())
 			.then((json) => {this.props.setLoginMenu(json, this.state.countries);})

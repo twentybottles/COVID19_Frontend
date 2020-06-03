@@ -15,10 +15,9 @@ class ForgotPasswordView extends Component {
                 <h1>Forgot Password</h1>
                 <Form className="text-left" onSubmit={handleSubmit}>
                     <FormGroup className="form-group">
-                        <Label for="MyEmailAddress">Email</Label>
-                        <ErrorMessage name="myEmailAddress" />
-                        <Field type="email" name="myEmailAddress" className="form-control" autoComplete="email" placeholder="Enter Your EmailAddress" valid={dirty && !errors.myEmailAddress} invalid={touched.myEmailAddress && !!errors.myEmailAddress} />
-                        {(touched.myEmailAddress && errors.myEmailAddress) ? <ErrorInnerMessage name="myEmailAddress" /> : null}                
+                        <Label for="emailAddress">EmailAddress</Label>
+                        <Field type="email" name="emailAddress" className="form-control" autoComplete="emailAddress" placeholder="Enter emailAddress" />
+                        {(touched.emailAddress && errors.emailAddress) ? <ErrorInnerMessage name="emailAddress" /> : null}
                     </FormGroup>
                     <Button type="submit" className="btn-block" color="primary" disabled={!dirty || isSubmitting}>Submit</Button>
                 </Form>
@@ -34,26 +33,35 @@ const ErrorInnerMessage = ({ name }) => (<ErrorMessage name={name} component={({
 const MyEnhancedForm = withFormik({
     mapPropsToValues: props => ({myEmailAddress: ''}),
     validationSchema: Yup.object().shape({
-        myEmailAddress: Yup.string().min(10, 'Username is too short')
-                                    .max(30, 'Username is too long')
-                                    .required('Username is required')
+        emailAddress: Yup.string().min(10, 'emailAddress is too short')
+                                  .max(30, 'emailAddress is too long')
+                                  .required('emailAddress is required')
     }),
-    handleSubmit: (values, { props }) => {
-        // fetch('http://example.com',{
-        //     method: "POST",
-        //     body: JSON.stringify(userData),
-        //     headers: {
-        //       'Accept': 'application/json',
-        //       'Content-Type': 'application/json'
-        //     },
-        // }).then(response => {
-        //     response.json().then(data =>{
-        //       console.log("Successful" + data);
-        //     })
-        // });
-        props.history.push({
-            pathname: '/forgot-password-complete'
+    handleSubmit: (values, { setErrors, setSubmitting, props }) => {
+        
+        setSubmitting(false);
+        
+        fetch('http://localhost:8080/sendMail/password', {
+            method: 'POST',
+            mode: 'cors',
+            // cache: "no-cache",
+            // credentials: "include",
+            // headers: {
+            //     "Content-Type": "application/json; charset=utf-8",
+            //     'X-XSRF-TOKEN': Cookie.get('XSRF-TOKEN')
+            // },
+            headers: {"Content-Type": "application/json; charset=utf-8"},
+            body : values.emailAddress
         })
+        .then(response => response.json())
+        .then(function(result) {
+            if (result) {
+                props.history.push({pathname:'/signup-complete'})
+            }
+            setErrors({ emailAddress : 'Email Address is not registered' });
+        })
+        .catch(error => console.error('Error:', error));
+        
     },
 })(ForgotPasswordView);
 
