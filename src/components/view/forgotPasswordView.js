@@ -31,7 +31,7 @@ class ForgotPasswordView extends Component {
 const ErrorInnerMessage = ({ name }) => (<ErrorMessage name={name} component={({ children }) => (<span className="errorMsg">{children}</span>)} />);
 
 const MyEnhancedForm = withFormik({
-    mapPropsToValues: props => ({myEmailAddress: ''}),
+    mapPropsToValues: props => ({emailAddress: ''}),
     validationSchema: Yup.object().shape({
         emailAddress: Yup.string().min(10, 'emailAddress is too short')
                                   .max(30, 'emailAddress is too long')
@@ -41,7 +41,7 @@ const MyEnhancedForm = withFormik({
         
         setSubmitting(false);
         
-        fetch('http://localhost:8080/sendMail/password', {
+        fetch('http://localhost:8080/signup/search/username', {
             method: 'POST',
             mode: 'cors',
             // cache: "no-cache",
@@ -58,7 +58,11 @@ const MyEnhancedForm = withFormik({
             if (!result) {
                 return setErrors({ emailAddress : 'Email Address is not registered' });
             }
-            props.history.push({pathname:'/signup-complete'})
+            props.history.push({
+                pathname: '/forgot-password-complete',
+                state: { emailAddress: values.emailAddress}
+            })
+            props.history.push({pathname:'/forgot-password-complete'})
         })
         .catch(error => console.error('Error:', error));
         
