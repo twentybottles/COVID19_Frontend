@@ -55,10 +55,10 @@ const MyEnhancedForm = withFormik({
         })
         .then(response => response.json())
         .then(function(result) {
-            if (result) {
-                props.history.push({pathname:'/signup-complete'})
+            if (!result) {
+                return setErrors({ emailAddress : 'Email Address is not registered' });
             }
-            setErrors({ emailAddress : 'Email Address is not registered' });
+            props.history.push({pathname:'/signup-complete'})
         })
         .catch(error => console.error('Error:', error));
         
