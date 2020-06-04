@@ -4,6 +4,34 @@ import { withFormik } from 'formik';
 
 class ForgotPasswordCompleteView extends Component {
 
+    constructor(props) {
+
+        super(props);
+
+        if (props.location.state === undefined || props.location.state.emailAddress === undefined) {return;}
+
+        fetch('http://localhost:8080/sendMail/password', {
+            method: 'POST',
+            mode: 'cors',
+            // cache: "no-cache",
+            // credentials: "include",
+            // headers: {
+            //     "Content-Type": "application/json; charset=utf-8",
+            //     'X-XSRF-TOKEN': Cookie.get('XSRF-TOKEN')
+            // },
+            headers: {"Content-Type": "application/json; charset=utf-8"},
+            body : props.location.state.emailAddress
+        })
+        .then(response => response.json())
+        .then(function(result) {
+            if (!result) {
+                throw new Error('Network response was not ok.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+
+    }
+
     render() {
 
         const {handleSubmit} = this.props;
