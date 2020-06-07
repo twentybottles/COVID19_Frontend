@@ -4,6 +4,7 @@ import { Dropdown } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
 import ProfileModal from './profileModal';
 import DownloadModal from './downloadModal';
+import { withCookies } from 'react-cookie';
 
 class LoginMenuDropDown extends Component {
 
@@ -21,7 +22,7 @@ class LoginMenuDropDown extends Component {
                     </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item>
-                        <span className="text" onClick={() => {this.logout()}}>Sign out</span>
+                        <span className="text" onClick={() => {this.logout(this.props)}}>Sign out</span>
                     </Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
@@ -29,7 +30,7 @@ class LoginMenuDropDown extends Component {
 
     }
 
-    logout() {
+    logout(props) {
 
         if(window.confirm('Sign out of COVID19.com')) {
 
@@ -37,8 +38,11 @@ class LoginMenuDropDown extends Component {
                 method: 'POST',
                 mode: 'cors',
                 cache: "no-cache",
-                credentials: "include",
-                headers: {"Content-Type": "application/json; charset=utf-8"}
+                credentials: 'include',
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                    "X-XSRF-TOKEN": props.cookies.get('XSRF-TOKEN')
+                },
             })
             .then(response => response.json())
             .then(function(result) {
@@ -59,4 +63,4 @@ class LoginMenuDropDown extends Component {
 
 const MyEnhancedForm = withFormik({})(LoginMenuDropDown);
 
-export default MyEnhancedForm;
+export default withCookies(MyEnhancedForm);

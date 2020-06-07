@@ -3,6 +3,7 @@ import { withFormik, ErrorMessage, Field } from 'formik';
 import { Form, Button, FormGroup, Label, Modal, ModalBody, ModalHeader, ModalFooter } from 'reactstrap';
 import * as Yup from 'yup';
 import PasswordStrengthMeter from '../util/passwordStrengthMeter';
+import { withCookies } from 'react-cookie';
 
 const ProfileModal = (props) => {
 
@@ -65,6 +66,7 @@ const ProfileModal = (props) => {
 }
 
 const MyEnhancedForm = withFormik({
+
   mapPropsToValues: props => ({
     firstname: props.member.firstname, 
     lastname: props.member.lastname, 
@@ -72,6 +74,7 @@ const MyEnhancedForm = withFormik({
     newPassword: '', 
     confirmPassword: ''
   }),
+  
   validationSchema: Yup.object().shape({
       firstname: Yup.string().min(1, 'firstname is too short')
                              .max(20, 'firstname is too long'),
@@ -91,13 +94,10 @@ const MyEnhancedForm = withFormik({
           method: 'POST',
           mode: 'cors',
           cache: "no-cache",
-          credentials: "include",
-          // headers: {
-          //     "Content-Type": "application/json; charset=utf-8",
-          //     'X-XSRF-TOKEN': Cookie.get('XSRF-TOKEN')
-          // },
+          credentials: 'include',
           headers: {
-              "Content-Type": "application/json; charset=utf-8"
+              "Content-Type": "application/json; charset=utf-8",
+              "X-XSRF-TOKEN": props.cookies.get('XSRF-TOKEN')
           },
           body : JSON.stringify({
               id : props.member.id,
@@ -120,6 +120,7 @@ const MyEnhancedForm = withFormik({
       .catch(error => console.error('Error:', error));
 
   },
+  
 })(ProfileModal);
 
-export default MyEnhancedForm;
+export default withCookies(MyEnhancedForm);

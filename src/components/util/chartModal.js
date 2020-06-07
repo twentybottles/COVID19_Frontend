@@ -21,9 +21,7 @@ const ChartModal = (props) => {
       mode: 'cors',
       cache: "force-cache",
       credentials: "include",
-      headers: {
-      "Content-Type": "application/json; charset=utf-8"
-      },
+      headers: {"Content-Type": "application/json; charset=utf-8"},
     })
     .then(response => response.json())
     .then(json => setItem({data:json}))

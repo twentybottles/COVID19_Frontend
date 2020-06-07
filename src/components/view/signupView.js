@@ -8,15 +8,7 @@ import { withCookies, Cookies } from 'react-cookie';
 
 class SignUpView extends Component {
 
-    static propTypes = {
-        cookies: instanceOf(Cookies).isRequired
-    };
-    // componentWillMount() {
-    
-    //     const { cookies } = this.props;
-    
-    //     this.state = {csrfToken: cookies.get('XSRF-TOKEN')};
-    // }
+    static propTypes = {cookies: instanceOf(Cookies).isRequired};
 
     render() {
 
@@ -64,7 +56,9 @@ class SignUpView extends Component {
 const ErrorInnerMessage = ({ name }) => (<ErrorMessage name={name} component={({ children }) => (<span className="errorMsg">{children}</span>)} />);
 
 const MyEnhancedForm = withFormik({
+
     mapPropsToValues: props => ({firstname: '', lastname: '', emailAddress: '', password: '', confirmPassword: ''}),
+    
     validationSchema: Yup.object().shape({
         firstname: Yup.string().min(1, 'firstname is too short')
                                 .max(20, 'firstname is too long')
@@ -79,6 +73,7 @@ const MyEnhancedForm = withFormik({
                                 .required('password is required'),
         confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
     }),
+
     handleSubmit: (values, { setErrors, setSubmitting, props }) => {
         
         setSubmitting(false);
@@ -86,15 +81,12 @@ const MyEnhancedForm = withFormik({
         fetch('http://localhost:8080/signup/search/username', {
             method: 'POST',
             mode: 'cors',
-            // cache: "no-cache",
-            // credentials: "include",
+            cache: "no-cache",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
-                'X-XSRF-TOKEN': props.cookies.get('XSRF-TOKEN')
+                "X-XSRF-TOKEN": props.cookies.get('XSRF-TOKEN')
             },
-            // headers: {
-            //     "Content-Type": "application/json; charset=utf-8"
-            // },
             body : values.emailAddress
         })
         .then(response => response.json())
@@ -110,6 +102,7 @@ const MyEnhancedForm = withFormik({
         .catch(error => console.error('Error:', error));
         
     },
+
 })(SignUpView);
 
 export default withCookies(MyEnhancedForm);
