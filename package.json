@@ -17,6 +17,7 @@
     "prop-types": "^15.7.2",
     "query-string": "^6.12.1",
     "react": "^16.13.1",
+    "react-cookie": "^4.0.3",
     "react-csv-creator": "^1.1.0",
     "react-dom": "^16.13.1",
     "react-password-strength-bar": "^0.3.2",

@@ -3,8 +3,35 @@ import { Link } from 'react-router-dom';
 import { Button, Form, FormGroup, Label } from 'reactstrap';
 import { withFormik, ErrorMessage, Field } from 'formik';
 import * as Yup from 'yup';
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 
 class LoginView extends Component {
+
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
+
+    // constructor(props) {
+
+    //     super(props);
+
+    //     fetch('http://localhost:8080/preLogin', {
+    //         method: 'POST',
+    //         mode: 'cors',
+    //         cache: "no-cache",
+    //         credentials: "include",
+    //         headers: {"Content-Type": "application/json; charset=utf-8"}
+    //     })
+    //     .then(response => response.json())
+    //     .then(function(result) {
+    //         if (!result) {
+    //             throw new Error('Network response was not ok.');
+    //         }
+    //     })
+    //     .catch(error => console.error('Error:', error));
+
+    // }
 
     render() {
 
@@ -59,14 +86,16 @@ const MyEnhancedForm = withFormik({
             mode: 'cors',
             cache: "no-cache",
             credentials: 'include',
-            headers: {"Content-Type": "application/json; charset=utf-8"},
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+                // "X-CSRF-Token": props.cookies.get('XSRF-TOKEN')
+            },
             body : JSON.stringify({ username: values.myUsername, password: values.myPassword}),
         })
-        .then(response => response.ok? response.json() : setErrors({ authentication : 'Either Username or Password is invalid' }))
-        .then(json => json !== undefined? props.history.push({pathname: '/mypage', search: '?id=' + json.id}) : null)
+        .then(response => response.ok? props.history.push({pathname: '/mypage'}) : setErrors({ authentication : 'Either Username or Password is invalid' }))
         .catch(error => console.error('Error:', error));
 
     },
 })(LoginView);
 
-export default MyEnhancedForm;
+export default withCookies(MyEnhancedForm);

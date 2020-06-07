@@ -3,8 +3,20 @@ import { Button, Form, FormGroup, Label } from 'reactstrap';
 import { withFormik, ErrorMessage, Field } from 'formik';
 import PasswordStrengthMeter from '../util/passwordStrengthMeter';
 import * as Yup from 'yup';
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 
 class SignUpView extends Component {
+
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
+    // componentWillMount() {
+    
+    //     const { cookies } = this.props;
+    
+    //     this.state = {csrfToken: cookies.get('XSRF-TOKEN')};
+    // }
 
     render() {
 
@@ -55,10 +67,10 @@ const MyEnhancedForm = withFormik({
     mapPropsToValues: props => ({firstname: '', lastname: '', emailAddress: '', password: '', confirmPassword: ''}),
     validationSchema: Yup.object().shape({
         firstname: Yup.string().min(1, 'firstname is too short')
-                                .max(10, 'firstname is too long')
+                                .max(20, 'firstname is too long')
                                 .required('firstname is required'),
         lastname: Yup.string().min(1, 'lastname is too short')
-                                .max(10, 'lastname is too long')
+                                .max(20, 'lastname is too long')
                                 .required('lastname is required'),
         emailAddress: Yup.string().min(10, 'emailAddress is too short')
                                 .max(30, 'emailAddress is too long')
@@ -76,13 +88,13 @@ const MyEnhancedForm = withFormik({
             mode: 'cors',
             // cache: "no-cache",
             // credentials: "include",
-            // headers: {
-            //     "Content-Type": "application/json; charset=utf-8",
-            //     'X-XSRF-TOKEN': Cookie.get('XSRF-TOKEN')
-            // },
             headers: {
-                "Content-Type": "application/json; charset=utf-8"
+                "Content-Type": "application/json; charset=utf-8",
+                'X-XSRF-TOKEN': props.cookies.get('XSRF-TOKEN')
             },
+            // headers: {
+            //     "Content-Type": "application/json; charset=utf-8"
+            // },
             body : values.emailAddress
         })
         .then(response => response.json())
@@ -100,4 +112,4 @@ const MyEnhancedForm = withFormik({
     },
 })(SignUpView);
 
-export default MyEnhancedForm;
+export default withCookies(MyEnhancedForm);
