@@ -20,6 +20,7 @@ const ChartModal = (props) => {
       method: 'GET',
       mode: 'cors',
       cache: "force-cache",
+      credentials: "include",
       headers: {
       "Content-Type": "application/json; charset=utf-8"
       },

@@ -74,9 +74,9 @@ const MyEnhancedForm = withFormik({
   }),
   validationSchema: Yup.object().shape({
       firstname: Yup.string().min(1, 'firstname is too short')
-                             .max(10, 'firstname is too long'),
+                             .max(20, 'firstname is too long'),
       lastname: Yup.string().min(1, 'lastname is too short')
-                            .max(10, 'lastname is too long'),
+                            .max(20, 'lastname is too long'),
       emailAddress: Yup.string().min(10, 'emailAddress is too short')
                                 .max(30, 'emailAddress is too long'),
       newPassword: Yup.string().min(8, 'newPassword is too short'),
@@ -112,7 +112,7 @@ const MyEnhancedForm = withFormik({
       .then(function(result) {
           if (result) {
               alert("Your Profile was updated.Please signin again!!");
-              window.location.href = 'http://localhost:3000';
+              window.location.reload();
           } else {
             setErrors({ emailAddress : 'Email Address is already registered' });
           }

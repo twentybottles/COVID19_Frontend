@@ -32,6 +32,22 @@ class LoginMenuDropDown extends Component {
     logout() {
 
         if(window.confirm('Sign out of COVID19.com')) {
+
+            fetch('http://localhost:8080/logout', {
+                method: 'POST',
+                mode: 'cors',
+                cache: "no-cache",
+                credentials: "include",
+                headers: {"Content-Type": "application/json; charset=utf-8"}
+            })
+            .then(response => response.json())
+            .then(function(result) {
+                if (!result) {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+            
             this.props.setLogoutMenu();
             window.location.href = 'http://localhost:3000';
         }
