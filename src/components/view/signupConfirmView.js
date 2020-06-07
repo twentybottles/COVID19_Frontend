@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label } from 'reactstrap';
 import { withFormik } from 'formik';
-//import Cookie from 'js-cookie'
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 
 class SignUpConfirmView extends Component {
+
+    static propTypes = {cookies: instanceOf(Cookies).isRequired};
 
     render() {
 
@@ -40,19 +43,17 @@ class SignUpConfirmView extends Component {
 }
 
 const MyEnhancedForm = withFormik({
+
     handleSubmit: (values, { props }) => {    
         
         fetch('http://localhost:8080/signup/register', {
             method: 'POST',
             mode: 'cors',
-            // cache: "no-cache",
-            // credentials: "include",
-            // headers: {
-            //     "Content-Type": "application/json; charset=utf-8",
-            //     'X-XSRF-TOKEN': Cookie.get('XSRF-TOKEN')
-            // },
+            cache: "no-cache",
+            credentials: 'include',
             headers: {
-                "Content-Type": "application/json; charset=utf-8"
+                "Content-Type": "application/json; charset=utf-8",
+                "X-XSRF-TOKEN": props.cookies.get('XSRF-TOKEN')
             },
             body : JSON.stringify({ 
                 username: values.location.state.emailAddress,
@@ -71,6 +72,7 @@ const MyEnhancedForm = withFormik({
         .catch(error => console.error('Error:', error));
 
     },
+    
 })(SignUpConfirmView);
 
-export default MyEnhancedForm;
+export default withCookies(MyEnhancedForm);

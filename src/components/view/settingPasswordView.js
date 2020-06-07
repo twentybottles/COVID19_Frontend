@@ -4,8 +4,12 @@ import { Button, Form, FormGroup, Label } from 'reactstrap';
 import { withFormik, ErrorMessage, Field } from 'formik';
 import PasswordStrengthMeter from '../util/passwordStrengthMeter';
 import * as Yup from 'yup';
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 
 class SettingPasswordView extends Component {
+
+    static propTypes = {cookies: instanceOf(Cookies).isRequired};
     
     render() {
 
@@ -38,12 +42,15 @@ class SettingPasswordView extends Component {
 const ErrorInnerMessage = ({ name }) => (<ErrorMessage name={name} component={({ children }) => (<span className="errorMsg">{children}</span>)} />);
 
 const MyEnhancedForm = withFormik({
+
     mapPropsToValues: props => ({password: '', confirmPassword: ''}),
+
     validationSchema: Yup.object().shape({                               
         password: Yup.string().min(8, 'password is too short')
                                 .required('password is required'),
         confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
     }),
+
     handleSubmit: (values, { setErrors, setSubmitting, props }) => {
         
         setSubmitting(false);
@@ -51,14 +58,11 @@ const MyEnhancedForm = withFormik({
         fetch('http://localhost:8080/password/register', {
             method: 'POST',
             mode: 'cors',
-            // cache: "no-cache",
-            // credentials: "include",
-            // headers: {
-            //     "Content-Type": "application/json; charset=utf-8",
-            //     'X-XSRF-TOKEN': Cookie.get('XSRF-TOKEN')
-            // },
+            cache: "no-cache",
+            credentials: 'include',
             headers: {
-                "Content-Type": "application/json; charset=utf-8"
+                "Content-Type": "application/json; charset=utf-8",
+                "X-XSRF-TOKEN": props.cookies.get('XSRF-TOKEN')
             },
             body: JSON.stringify({password: values.password, resetToken: props.qs.token})
         })
@@ -69,6 +73,7 @@ const MyEnhancedForm = withFormik({
         .catch(error => console.error('Error:', error));
         
     },
+    
 })(SettingPasswordView);
 
-export default MyEnhancedForm;
+export default withCookies(MyEnhancedForm);

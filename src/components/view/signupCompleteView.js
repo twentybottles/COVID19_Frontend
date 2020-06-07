@@ -22,9 +22,9 @@ class SignUpCompleteView extends Component {
 }
 
 const MyEnhancedForm = withFormik({
-    handleSubmit: props => {
-        props.history.push({pathname: '/'})
-    },
+
+    handleSubmit: props => {props.history.push({pathname: '/'})},
+    
 })(SignUpCompleteView);
 
 export default MyEnhancedForm;

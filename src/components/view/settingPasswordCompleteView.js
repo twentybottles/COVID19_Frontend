@@ -22,9 +22,9 @@ class SettingPasswordCompleteView extends Component {
 }
 
 const MyEnhancedForm = withFormik({
-    handleSubmit: props => {
-        props.history.push({pathname: '/'})
-    },
+
+    handleSubmit: props => {props.history.push({pathname: '/'})},
+    
 })(SettingPasswordCompleteView);
 
 export default MyEnhancedForm;
