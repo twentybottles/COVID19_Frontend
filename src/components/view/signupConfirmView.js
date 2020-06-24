@@ -46,7 +46,7 @@ const MyEnhancedForm = withFormik({
 
     handleSubmit: (values, { props }) => {    
         
-        fetch('http://localhost:8080/signup/register', {
+        fetch('http://3.20.220.91:8080/signup/register', {
             method: 'POST',
             mode: 'cors',
             cache: "no-cache",
