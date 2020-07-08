@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-<<<<<<< HEAD
-  react:
+
+  react_app:
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,18 +13,7 @@ services:
      - 3000:3000
     tty: true
     restart: always
-=======
-  react_app:
-    container_name: react_app
-    build: ./
-    command: sh -c "yarn start"
-    volumes:
-      - ./:/usr/src/app
-    ports:
-     - "3000:3000"
-    restart: always
 
->>>>>>> master
   nginx:
     image: nginx
     container_name: nginx
@@ -34,13 +23,8 @@ services:
       - ./build:/var/www
       - ./nginx/:/etc/nginx/conf.d/
     depends_on:
-<<<<<<< HEAD
-      - react
-    restart: always
-=======
       - react_app
 
->>>>>>> master
 networks:
   default:
     external:

@@ -1,7 +1,5 @@
-<<<<<<< HEAD
-FROM node:12.18.0-alpine
 WORKDIR /usr/src/app
-=======
+
 FROM node:12.16.1
 
 WORKDIR /usr/src/app
@@ -13,4 +11,3 @@ WORKDIR /usr/src/app
 #COPY . .
 
 #ENTRYPOINT [ "yarn", "start" ]
->>>>>>> master
