@@ -53,8 +53,6 @@ class SignUpView extends Component {
 
 }
 
-const cookies = new Cookies();
-
 const ErrorInnerMessage = ({ name }) => (<ErrorMessage name={name} component={({ children }) => (<span className="errorMsg">{children}</span>)} />);
 
 const MyEnhancedForm = withFormik({
@@ -77,17 +75,17 @@ const MyEnhancedForm = withFormik({
     }),
 
     handleSubmit: (values, { setErrors, setSubmitting, props }) => {
-
+        
         setSubmitting(false);
         
-        fetch('http://3.20.220.91:8080/signup/search/username', {
+        fetch('/api/signup/search/username', {
             method: 'POST',
             mode: 'cors',
             cache: "no-cache",
             credentials: "include",
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
-                "X-XSRF-TOKEN": cookies.get('XSRF-TOKEN')
+                "X-XSRF-TOKEN": props.cookies.get('XSRF-TOKEN')
             },
             body : values.emailAddress
         })
