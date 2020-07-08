@@ -14,12 +14,14 @@ class LoginView extends Component {
 
         super(props);
 
-        fetch('/api/preLogin', {
+        fetch('http://3.20.220.91:8080/preLogin', {
             method: 'POST',
             mode: 'cors',
             cache: "no-cache",
             credentials: "include",
-            headers: {"Content-Type": "application/json; charset=utf-8"}
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            }
         })
         .then(response => response.json())
         .then(function(result) {
@@ -28,7 +30,6 @@ class LoginView extends Component {
             }
         })
         .catch(error => console.error('Error:', error));
-
 
     }
 
@@ -63,6 +64,8 @@ class LoginView extends Component {
 
 }
 
+const cookies = new Cookies();
+
 const ErrorInnerMessage = ({ name }) => (<ErrorMessage name={name} component={({ children }) => (<span className="errorMsg">{children}</span>)} />);
 
 const MyEnhancedForm = withFormik({
@@ -79,16 +82,18 @@ const MyEnhancedForm = withFormik({
 
     handleSubmit: (values, { setErrors, props, setSubmitting }) => {
 
+        console.log(cookies.get('XSRF-TOKEN'));
+
         setSubmitting(false);
 
-        fetch('/api/authentication', {
+        fetch('http://3.20.220.91:8080/authentication', {
             method: 'POST',
             mode: 'cors',
             cache: "no-cache",
             credentials: 'include',
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
-                "X-XSRF-TOKEN": props.cookies.get('XSRF-TOKEN')
+                "X-XSRF-TOKEN": cookies.get('XSRF-TOKEN')
             },
             body : JSON.stringify({ username: values.myUsername, password: values.myPassword}),
         })

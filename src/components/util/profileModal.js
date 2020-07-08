@@ -90,7 +90,7 @@ const MyEnhancedForm = withFormik({
 
       setSubmitting(false);
 
-      fetch('/api/signup/update', {
+      fetch('http://3.20.220.91:8080/signup/update', {
           method: 'POST',
           mode: 'cors',
           cache: "no-cache",

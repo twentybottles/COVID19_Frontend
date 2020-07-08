@@ -22,7 +22,7 @@ class MypageView extends Component {
 			countries:[]
 	    }
 
-	    fetch('/api/covid/search/summary', {
+	    fetch('http://3.20.220.91:8080/covid/search/summary', {
 			method: 'GET',
 			mode: 'cors',
 			cache: "force-cache",
@@ -53,7 +53,7 @@ class MypageView extends Component {
 
 		if (this.state.isInit) {
 
-			fetch('/api/login/search/userInfo', {
+			fetch('http://3.20.220.91:8080/login/search/userInfo', {
 			    method: 'GET',
 			    mode: 'cors',
 			    cache: "no-cache",

@@ -34,7 +34,7 @@ class LoginMenuDropDown extends Component {
 
         if(window.confirm('Sign out of COVID19.com')) {
 
-            fetch('/api/logout', {
+            fetch('http://3.20.220.91:8080/logout', {
                 method: 'POST',
                 mode: 'cors',
                 cache: "no-cache",
@@ -53,7 +53,7 @@ class LoginMenuDropDown extends Component {
             .catch(error => console.error('Error:', error));
             
             this.props.setLogoutMenu();
-            window.location.href = 'http://localhost:3000';
+            window.location.href = 'http://3.20.220.91:3000';
         }
 
     }

@@ -14,7 +14,7 @@ class ForgotPasswordCompleteView extends Component {
 
         if (props.location.state === undefined || props.location.state.emailAddress === undefined) {return;}
 
-        fetch('/api/sendMail/password', {
+        fetch('http://3.20.220.91:8080/sendMail/password', {
             method: 'POST',
             mode: 'cors',
             cache: "no-cache",
