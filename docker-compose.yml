@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  react:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+     - ./:/usr/src/app
+    command: sh -c "yarn start"
+    ports:
+     - 3000:3000
+    tty: true
+    restart: always
+  nginx:
+    image: nginx
+    container_name: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./build:/var/www
+      - ./nginx/:/etc/nginx/conf.d/
+    depends_on:
+      - react
+    restart: always
+networks:
+  default:
+    external:
+      name: shared

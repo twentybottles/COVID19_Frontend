@@ -14,7 +14,7 @@ class LoginView extends Component {
 
         super(props);
 
-        fetch('http://3.20.220.91:8080/preLogin', {
+        fetch('/api/preLogin', {
             method: 'POST',
             mode: 'cors',
             cache: "no-cache",
@@ -82,11 +82,9 @@ const MyEnhancedForm = withFormik({
 
     handleSubmit: (values, { setErrors, props, setSubmitting }) => {
 
-        console.log(cookies.get('XSRF-TOKEN'));
-
         setSubmitting(false);
 
-        fetch('http://3.20.220.91:8080/authentication', {
+        fetch('/api/authentication', {
             method: 'POST',
             mode: 'cors',
             cache: "no-cache",
