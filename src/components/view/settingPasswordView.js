@@ -55,7 +55,7 @@ const MyEnhancedForm = withFormik({
         
         setSubmitting(false);
         
-        fetch('http://localhost:8080/password/register', {
+        fetch('/api/password/register', {
             method: 'POST',
             mode: 'cors',
             cache: "no-cache",

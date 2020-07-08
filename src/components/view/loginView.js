@@ -14,7 +14,7 @@ class LoginView extends Component {
 
         super(props);
 
-        fetch('http://localhost:8080/preLogin', {
+        fetch('/api/preLogin', {
             method: 'POST',
             mode: 'cors',
             cache: "no-cache",
@@ -81,7 +81,7 @@ const MyEnhancedForm = withFormik({
 
         setSubmitting(false);
 
-        fetch('http://localhost:8080/authentication', {
+        fetch('/api/authentication', {
             method: 'POST',
             mode: 'cors',
             cache: "no-cache",

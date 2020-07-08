@@ -34,7 +34,7 @@ class LoginMenuDropDown extends Component {
 
         if(window.confirm('Sign out of COVID19.com')) {
 
-            fetch('http://localhost:8080/logout', {
+            fetch('/api/logout', {
                 method: 'POST',
                 mode: 'cors',
                 cache: "no-cache",
