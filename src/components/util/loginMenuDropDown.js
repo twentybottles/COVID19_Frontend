@@ -54,7 +54,7 @@ class LoginMenuDropDown extends Component {
             
             this.props.setLogoutMenu();
 
-            window.location.href = 'http://localhost:3000';
+            window.location.href = 'http://www.covid19worldwide.tk';
 
         }
 
