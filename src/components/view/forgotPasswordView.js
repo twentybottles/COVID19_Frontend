@@ -48,7 +48,7 @@ const MyEnhancedForm = withFormik({
         
         setSubmitting(false);
         
-        fetch('http://localhost:8080/signup/search/username', {
+        fetch('http://3.20.220.91:8080/signup/search/username', {
             method: 'POST',
             mode: 'cors',
             cache: "no-cache",
