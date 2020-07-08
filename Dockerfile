@@ -1,5 +1,3 @@
-WORKDIR /usr/src/app
-
 FROM node:12.16.1
 
 WORKDIR /usr/src/app
